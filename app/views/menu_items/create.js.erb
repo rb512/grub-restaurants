@@ -1,0 +1,3 @@
+$('#new_menu_item').remove();
+$('#new_link').show();
+$('.menu_items').html("<%= j(render :partial => 'menu/menu_items', :locals => {:menu_items => @menu_items})")
