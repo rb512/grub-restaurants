@@ -48,7 +48,7 @@ class MenuItemsController < ApplicationController
         format.html { redirect_to menu_path(@menu_item.menu), notice: 'Menu item was successfully created.' }
         format.js
       else
-        format.html { render url => {:controller => "menu", :action => 'new'} }
+        format.html { render "/menu/show" }
         format.js
       end
     end
