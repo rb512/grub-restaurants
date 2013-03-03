@@ -18,11 +18,6 @@ class MenusController < ApplicationController
     @menu_items = @menu.menu_items
   end
 
-  def new_menu_item
-    @menu = Menu.find(params[:id])
-    @menu_item = @menu.menu_items.build
-  end
-  
   # GET /menus/new
   # GET /menus/new.json
   def new
@@ -39,7 +34,9 @@ class MenusController < ApplicationController
   # POST /menus.json
   def create
     @menu = Menu.new(params[:menu])
-
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEFORE :#{params[:menu]}"
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEFORE :#{params[:menu][:menu_items_attributes]}"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BEFORE :#{@menu.menu_items.count}"
     respond_to do |format|
       if @menu.save
         format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
@@ -47,10 +44,14 @@ class MenusController < ApplicationController
       else
         format.html { render action: "new" }
         format.json { render json: @menu.errors, status: :unprocessable_entity }
+        format.js
       end
     end
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ After Save :#{@menu}"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! After Save :#{@menu.menu_items.count}"
   end
 
+ 
   # PUT /menus/1
   # PUT /menus/1.json
   def update
@@ -67,6 +68,16 @@ class MenusController < ApplicationController
     end
   end
 
+  def destroy_menu_item
+    @menu = Menu.find(params[:menu_id])
+    @menu_item = @menu.menu_items.find(params[:id])
+    @menu_item.destroy
+    respond_to do |format|
+      format.html {redirect_to @menu}
+      format.json {head :no_content}
+    end
+  end
+  
   # DELETE /menus/1
   # DELETE /menus/1.json
   def destroy
@@ -76,6 +87,7 @@ class MenusController < ApplicationController
     respond_to do |format|
       format.html { redirect_to menus_url }
       format.json { head :no_content }
+      format.js
     end
   end
 end

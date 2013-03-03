@@ -13,4 +13,37 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require cocoon
 //= require_tree .
+$(document).ready(function() {
+    $("#tags a.add_fields").
+      data("association-insertion-position", 'before').
+      data("association-insertion-node", 'this');
+
+    $('#tags').bind('cocoon:after-insert',
+         function(e, tag) {
+             $(".project-tag-fields a.add_fields").
+                 data("association-insertion-position", 'before').
+                 data("association-insertion-node", 'this');
+             $('.project-tag-fields').bind('cocoon:after-insert',
+                  function() {
+                    $(this).children("#tag_from_list").remove();
+                    $(this).children("a.add_fields").hide();
+                  });
+         });
+
+    $('#menu_items').bind('cocoon:before-insert', function(e,task_to_be_added) {
+        task_to_be_added.fadeIn('slow');
+    });
+
+    $('#menu_items').bind('cocoon:after-insert', function(e, added_task) {
+        //added_task.css("background","red");
+    });
+
+    $('#menu_items').bind('cocoon:before-remove', function(e, task) {
+        $(this).data('remove-timeout', 1000);
+        task.fadeOut('slow');
+    })
+
+    $('body').tabs();
+});

@@ -1,14 +1,16 @@
 <%- model_class = Menu -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%=t '.title', :default => model_class.model_name.human %> : <%= "#{@menu.name} (#{@menu.menu_type})"%></h1> 
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+<!-- <dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name)%>:</strong></dt>
   <dd><%= @menu.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:menu_type) %>:</strong></dt>
   <dd><%= @menu.menu_type %></dd>
-</dl>
+</dl> -->
+
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               menus_path, :class => 'btn'  %>
@@ -21,14 +23,19 @@
               :class => 'btn btn-danger' %>
 </div>
 
+
 <dl class ="dl-horizontal">
-<%=link_to "New Menu Item", my_menu_item_path(@menu.id), :id => 'new_link', :remote => true%>
+	
 </dl>
 
-
-
-<h3>Menu Items</h3>
+<h3>Menu</h3>
 <div id="menu_items">
-	<%=render :partial => "menu_items/menu_items", :menu_items => @menu_items%>
+	<%if !@menu.menu_items.first.id.nil?%>
+		<%=render :partial => 'menu_items', :menu => @menu%>
+	<%end%>
 </div>
+
+
+
+
 

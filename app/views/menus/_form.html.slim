@@ -1,0 +1,18 @@
+= simple_form_for @menu, :wrapper => 'inline' do |f|
+  = f.input :name, :hint => 'Just a name for your menu'
+  = f.input :menu_type, :hint => 'Type of menu'
+  ul.tabs
+    li.active
+      = link_to 'Menu_Items', '#menu_items'
+
+  .tab-content
+    #menu_items.active
+      = f.simple_fields_for :menu_items do |menu_item|
+        = render 'menu_item_fields', :f => menu_item
+      .links
+        = link_to_add_association 'Add Item', f, :menu_items, 
+		:render_options => { :wrapper => 'inline' }, :class => 'btn btn-primary'
+		
+  br
+  .actions
+    = f.button :submit, :disable_with => 'Please wait ...'

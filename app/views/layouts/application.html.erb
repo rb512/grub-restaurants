@@ -3,7 +3,6 @@
 <head>
   <title>GrubshireOnsite</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -31,26 +30,10 @@
 
 	  <div class="container">
 	    <div class="row">
-	      <div class="span9"><%= yield %></div>
-	      <div class="span3">
-			  <div class="well sidebar-nav">  
-			              <ul class="nav nav-list">  
-			                <li class="nav-header">Restaurant OnSite</li>  
-			                <li class="active"><a href="#">Manage Tablets</a></li>  
-			                <li><a href="#">Manage Servers</a></li>  
-			                <li><a href="#">Troubleshoot</a></li>  
-			                <li><a href="#">Manage Menu</a></li>  
-			                <li class="nav-header">Retaurant BackStage</li>  
-			                <li><a href="#">Update Menu</a></li>  
-			                <li><a href="#">Manage Promotions</a></li>  
-			                <li><a href="#">Billing</a></li>  
-			                <li><a href="#">Account Settings</a></li>  
-			                <li><a href="#">Metrics</a></li>  
-			             </ul>  
-			            </div><!--/.well --> 
-	      </div>
+	      <div class="span10"><%= yield %></div>
+	     
 	    </div>
 	  </div>
-
+  <%= javascript_include_tag :application %>
 </body>
 </html>

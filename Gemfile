@@ -4,10 +4,13 @@ gem 'rails', '3.2.3'
 gem 'twitter-bootstrap-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'cocoon'
 #gem 'sqlite3'
 gem 'client_side_validations'
-
+gem 'simple_form'
+gem 'country_select'
+gem "slim"
+gem "slim-rails", :require => false
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -19,7 +22,9 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
-
+group :development do 
+  gem 'sqlite3'
+end
 gem 'jquery-rails'
 group :production do
   gem 'pg'	

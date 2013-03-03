@@ -28,7 +28,10 @@
       <%= f.text_field :menu_type, :class => 'text_field' %>
     </div>
   </div>
-
+  <%=f.fields_for :menu_items do |menu_item|%>
+	  <%=render "menu_item_fields", :f => menu_item%>
+  <%end%>
+  <%=link_to_add_association "Add Menu Item", f, :menu_items%>
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

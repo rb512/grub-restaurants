@@ -1,0 +1,25 @@
+p#notice = notice
+div class="page_header"
+	h1 =@menu.name 
+	   
+	
+
+h3 Menu Items
+
+table class="table table-striped"
+  tr
+   th Item Name
+   th Item Description
+   th Item Price
+   th Category	
+  -@menu.menu_items.each do |item|
+    tr
+      td= item.name
+      td= item.description
+      td= item.price
+	  td= item.category
+
+
+= link_to 'Edit', edit_menu_path(@menu)
+= '|'
+= link_to 'Back', menus_path
