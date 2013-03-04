@@ -18,10 +18,10 @@
 			<%=link_to "GrubShire", root_path, :class => "brand"%>
 	        <div class="nav-collapse">
 	          <ul class="nav">
-	            <li><%= link_to "Browse Menu", menus_path %></li>
-	            <li><%= link_to "Price List" %></li>
-	            <li><%= link_to "Contact Us" %></li>
-	            <li><%= link_to "Cart" %></li>
+	            <li><%= link_to "Menu", menus_path %></li>
+	            <li><%= link_to "Restaurants" %></li>
+	            <li><%= link_to "Waiters" %></li>
+	            <li><%= link_to "Metrics" %></li>
 	          </ul>
 	        </div>
 	      </div>
@@ -30,6 +30,14 @@
 
 	  <div class="container">
 	    <div class="row">
+			<%if notice%>
+				<%=render "layouts/notice", :notice => (notice||alert), :id =>"notice"%>
+			<%elsif alert%>
+				<%=render "layouts/notice", :notice => (notice||alert), :id =>"error"%>
+			<%end%>
+			<% if user_restaurant_signed_in?%>
+			<%=link_to "Sign Out", destroy_user_restaurant_session_path, :method => 'delete'%>
+			<%end%>
 	      <div class="span10"><%= yield %></div>
 	     
 	    </div>

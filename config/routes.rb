@@ -1,5 +1,7 @@
 GrubshireOnsite::Application.routes.draw do
 
+  devise_for :user_restaurants
+
   resources :menus
 
   root :to => 'menus#index'
