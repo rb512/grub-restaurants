@@ -1,4 +1,7 @@
-p#notice = notice
+-if notice
+  =render "layouts/notice", :notice => notice
+-else	  
+  =render "layouts/no_error"
 div class="page_header"
 	h1 =@menu.name 
 	   

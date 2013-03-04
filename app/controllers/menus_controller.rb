@@ -14,7 +14,6 @@ class MenusController < ApplicationController
   # GET /menus/1.json
   def show
     @menu = Menu.find(params[:id])
-    @menu_item = @menu.menu_items.build
     @menu_items = @menu.menu_items
   end
 
@@ -34,9 +33,6 @@ class MenusController < ApplicationController
   # POST /menus.json
   def create
     @menu = Menu.new(params[:menu])
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEFORE :#{params[:menu]}"
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ BEFORE :#{params[:menu][:menu_items_attributes]}"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BEFORE :#{@menu.menu_items.count}"
     respond_to do |format|
       if @menu.save
         format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
@@ -47,8 +43,6 @@ class MenusController < ApplicationController
         format.js
       end
     end
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ After Save :#{@menu}"
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! After Save :#{@menu.menu_items.count}"
   end
 
  
@@ -56,7 +50,6 @@ class MenusController < ApplicationController
   # PUT /menus/1.json
   def update
     @menu = Menu.find(params[:id])
-
     respond_to do |format|
       if @menu.update_attributes(params[:menu])
         format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
