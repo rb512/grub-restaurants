@@ -18,7 +18,20 @@ class Menu < ActiveRecord::Base
     %w[category_step menu_items_step]
   end
   
+  def previous_step
+    self.current_step = steps[steps.index(current_step)-1]
+  end
+  
   def next_step
     self.current_step = steps[steps.index(current_step)+1]
   end
+  
+  def first_step?
+    self.current_step == steps.first
+  end
+    
+  def last_step?
+    self.current_step == steps.last
+  end
+  
 end

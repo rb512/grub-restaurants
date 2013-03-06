@@ -12,6 +12,6 @@
           = f.input_field :price, :hint => 'Item Price'
       td
         = f.input :category, :wrapper => :inline, :label => false, :hint => 'Category' do
-          = f.input_field :category, :hint => 'Category'		  
+          = f.select(:category, @categories.collect {|category| [ category.name] })
       td
         = link_to_remove_association "remove item", f, :class => "btn btn-mini btn-danger"

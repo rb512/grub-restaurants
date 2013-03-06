@@ -21,9 +21,13 @@ class MenusController < ApplicationController
   # GET /menus/new
   # GET /menus/new.json
   def new
+    session[:menu_params] ||= {}
     @menu = current_user_restaurant.menus.new
-    @menu.menu_items.build
-    @menu.categories.build
+    @menu = current_user_restaurant.menus.new(session[:menu_params])
+    categories = @menu.categories
+    @categories =[]
+    categories.each {|category| @categories << category}
+    @menu.current_step = session[:menu_step]
   end
 
   # GET /menus/1/edit
@@ -34,9 +38,26 @@ class MenusController < ApplicationController
   # POST /menus
   # POST /menus.json
   def create
-    @menu = current_user_restaurant.menus.new(params[:menu])
-    @menu.next_step
-    render "new"
+    session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
+    @menu = current_user_restaurant.menus.new(session[:menu_params])
+    categories = @menu.categories
+    @categories =[]
+    categories.each {|category| @categories << category}
+    @menu.current_step = session[:menu_step]
+    if params[:back_button]
+      @menu.previous_step
+    elsif @menu.last_step?
+      @menu.save
+    else
+      @menu.next_step
+    end
+    session[:menu_step] = @menu.current_step
+    if @menu.new_record?
+      render "new"
+    else
+      session[:menu_steps]=session[:menu_params] = nil
+      redirect_to @menu, notice: "Menu was successfully created."
+    end
     # respond_to do |format|
     #   if @menu.save
     #     format.html { redirect_to @menu, notice: 'Menu was successfully created.' }

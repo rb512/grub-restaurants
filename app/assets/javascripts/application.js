@@ -17,18 +17,18 @@
 //= require bootstrap-tabs
 //= require_tree .
 $(document).ready(function() {
-    $("#tags a.add_fields").
+    $("#category a.add_fields").
       data("association-insertion-position", 'before').
       data("association-insertion-node", 'this');
 
-    $('#tags').bind('cocoon:after-insert',
+    $('#category').bind('cocoon:after-insert',
          function(e, tag) {
-             $(".project-tag-fields a.add_fields").
+             $(".category-fields a.add_fields").
                  data("association-insertion-position", 'before').
                  data("association-insertion-node", 'this');
-             $('.project-tag-fields').bind('cocoon:after-insert',
+             $('.category-fields').bind('cocoon:after-insert',
                   function() {
-                    $(this).children("#tag_from_list").remove();
+                    $(this).children("#category_from_list").remove();
                     $(this).children("a.add_fields").hide();
                   });
          });

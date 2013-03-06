@@ -4,3 +4,5 @@
       td
         = f.input :name, :wrapper => :inline, :label => false, :hint => 'Category' do
           = f.input_field :name, :hint => 'Category'
+      td
+        = link_to_remove_association "remove item", f, :class => "btn btn-mini btn-danger"
