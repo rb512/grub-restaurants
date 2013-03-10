@@ -9,4 +9,9 @@ class UserRestaurant < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
+  
+  def self.authenticate(username,password)
+    user = UserRestaurant.find_for_authentication(:email => username)
+    user.valid_password?(password) ? user:nil
+  end
 end
