@@ -7,16 +7,20 @@ h3 Menu Items
 
 table class="table table-striped"
   tr
+   th 
    th Item Name
    th Item Description
    th Item Price
    th Category	
+   th Actions
   -@menu.menu_items.each do |item|
     tr
+	  td= image_tag item.item_asset.url(:small)
       td= item.name
       td= item.description
       td= item.price
 	  td= item.category
+	  td= link_to 'Destroy', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
 
 
 = link_to 'Edit', edit_menu_path(@menu)

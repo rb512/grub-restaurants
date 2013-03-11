@@ -2,12 +2,15 @@ GrubshireOnsite::Application.routes.draw do
 
   devise_for :user_restaurants
 
-  resources :menus
+  resources :menus do
+    resources :menu_items
+  end
 
   root :to => 'menus#index'
-  match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'
-  match 'create_menu_item' => 'menus#create_menu_item', :as => 'create_menu_item'
-  match '/menu/:menu_id/menu_item/:id' => 'menus#destroy_menu_item'
+  # match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'
+#   match 'create_menu_item' => 'menus#create_menu_item', :as => 'create_menu_item'
+#   
+#   match '/menu/:menu_id/menu_item/:id' => 'menus#destroy_menu_item'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

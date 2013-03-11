@@ -1,19 +1,12 @@
 class MenuItemsController < ApplicationController
-  # GET /menu_items
-  # GET /menu_items.json
-  def index
-    @menu_items = MenuItem.all
+  before_filter :authenticate_user_restaurant!
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @menu_items }
-    end
-  end
 
   # GET /menu_items/1
   # GET /menu_items/1.json
   def show
-    @menu_item = MenuItem.find(params[:id])
+    @menu = current_user_restaurant.menus.find(params[:menu_id])
+    @menu_item = @menu.menu_items.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,44 +14,18 @@ class MenuItemsController < ApplicationController
     end
   end
 
-  # GET /menu_items/new
-  # GET /menu_items/new.json
-  def new
-    @menu = Menu.find(params[:menu_id])
-    @menu_item = @menu.menu_items.build
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @menu_item }
-    end
-  end
 
   # GET /menu_items/1/edit
   def edit
-    @menu_item = MenuItem.find(params[:id])
-  end
-
-  # POST /menu_items
-  # POST /menu_items.json
-  def create
-    @menu_item = MenuItem.new(params[:menu_item])
-  
-    respond_to do |format|
-      if @menu_item.save
-          @menu_items = @menu_item.menu.menu_items
-        format.html { redirect_to menu_path(@menu_item.menu), notice: 'Menu item was successfully created.' }
-        format.js
-      else
-        format.html { render "/menu/show" }
-        format.js
-      end
-    end
+    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu_item = @menu.menu_items.find(params[:menu_id])
   end
 
   # PUT /menu_items/1
   # PUT /menu_items/1.json
   def update
-    @menu_item = MenuItem.find(params[:id])
+    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu_item = @menu.menu_items.find(params[:menu_id])
 
     respond_to do |format|
       if @menu_item.update_attributes(params[:menu_item])
@@ -74,7 +41,11 @@ class MenuItemsController < ApplicationController
   # DELETE /menu_items/1
   # DELETE /menu_items/1.json
   def destroy
-    @menu_item = MenuItem.find(params[:id])
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params}"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:menu_id]}"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:id]}"
+    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu_item = @menu.menu_items.find(params[:menu_id])
     @menu_item.destroy
 
     respond_to do |format|

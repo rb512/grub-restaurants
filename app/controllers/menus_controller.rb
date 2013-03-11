@@ -22,17 +22,18 @@ class MenusController < ApplicationController
   # GET /menus/new.json
   def new
     session[:menu_params] ||= {}
-    @menu = current_user_restaurant.menus.new
     @menu = current_user_restaurant.menus.new(session[:menu_params])
-    categories = @menu.categories
-    @categories =[]
-    categories.each {|category| @categories << category}
+    @categories = @menu.categories
     @menu.current_step = session[:menu_step]
   end
 
   # GET /menus/1/edit
   def edit
+    session[:menu_update_params] ||= {}
     @menu = current_user_restaurant.menus.find(params[:id])
+    @categories = @menu.categories
+    session[:menu_id] = @menu.id
+    @menu.current_step = session[:menu_update_step]
   end
 
   # POST /menus
@@ -40,9 +41,7 @@ class MenusController < ApplicationController
   def create
     session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
     @menu = current_user_restaurant.menus.new(session[:menu_params])
-    categories = @menu.categories
-    @categories =[]
-    categories.each {|category| @categories << category}
+    @categories = @menu.categories
     @menu.current_step = session[:menu_step]
     if params[:back_button]
       @menu.previous_step
@@ -58,31 +57,30 @@ class MenusController < ApplicationController
       session[:menu_steps]=session[:menu_params] = nil
       redirect_to @menu, notice: "Menu was successfully created."
     end
-    # respond_to do |format|
-    #   if @menu.save
-    #     format.html { redirect_to @menu, notice: 'Menu was successfully created.' }
-    #     format.json { render json: @menu, status: :created, location: @menu }
-    #   else
-    #     format.html { render action: "new" }
-    #     format.json { render json: @menu.errors, status: :unprocessable_entity }
-    #     format.js
-    #   end
-    # end
   end
 
  
   # PUT /menus/1
   # PUT /menus/1.json
   def update
+    session[:menu_update_params].deep_merge!(params[:menu]) if params[:menu]
     @menu = current_user_restaurant.menus.find(params[:id])
-    respond_to do |format|
-      if @menu.update_attributes(params[:menu])
-        format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @menu.errors, status: :unprocessable_entity }
-      end
+    @categories = @menu.categories
+    @menu.current_step = session[:menu_update_step]
+    if params[:back_button]
+      @menu.previous_step
+    elsif @menu.last_step?
+      @menu = @menu.update_attributes(session[:menu_update_params])
+    else
+      @menu.next_step
+    end
+    session[:menu_update_step] = @menu.current_step
+    if @menu.changed?
+      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NOTHIN CHANGED! :("
+      session[:menu_step]=session[:menu_params] = nil
+      redirect_to @menu, notice: "Menu was successfully updated."
+    else
+      render "edit"
     end
   end
 
@@ -108,4 +106,11 @@ class MenusController < ApplicationController
       format.js
     end
   end
+  
+  private
+  def get_categories(menu)
+    categories = []
+    menu.categories.each {|category| categories << category.name}
+  end
+    
 end

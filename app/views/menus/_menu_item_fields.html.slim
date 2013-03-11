@@ -13,5 +13,9 @@
       td
         = f.input :category, :wrapper => :inline, :label => false, :hint => 'Category' do
           = f.select(:category, @categories.collect {|category| [ category.name] })
+	  td 
+	   = f.input :item_asset, :wrapper => :inline, :label => false, :hint => 'Image' do
+	     = f.file_field :item_asset
+	   
       td
         = link_to_remove_association "remove item", f, :class => "btn btn-mini btn-danger"

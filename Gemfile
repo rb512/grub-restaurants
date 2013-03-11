@@ -12,6 +12,9 @@ gem 'country_select'
 gem "slim"
 gem "slim-rails", :require => false
 gem 'devise'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

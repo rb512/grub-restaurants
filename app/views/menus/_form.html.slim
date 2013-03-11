@@ -1,7 +1,7 @@
-= simple_form_for @menu, :wrapper => 'inline' do |f|
+= simple_form_for @menu, :html => {:multipart => true}, :wrapper => 'inline' do |f|
   = f.input :name, :hint => 'Just a name for your menu'
   = f.input :menu_type, :hint => 'Type of menu'
-  
+  ="#{@menu.current_step}"
   = render "#{@menu.current_step}", :f => f
 		
   br
