@@ -1,5 +1,7 @@
 GrubshireOnsite::Application.routes.draw do
 
+  devise_for :users
+
   devise_for :user_restaurants
 
   resources :menus do
@@ -7,6 +9,7 @@ GrubshireOnsite::Application.routes.draw do
   end
 
   root :to => 'menus#index'
+  match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   # match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'
 #   match 'create_menu_item' => 'menus#create_menu_item', :as => 'create_menu_item'
 #   

@@ -1,0 +1,6 @@
+{
+    "email": "<%=@user.email.html_safe%>",
+    "last_login_ip": "<%=@user.last_sign_in_ip.html_safe%>"
+	{"menu" : "<%=@user.menus.first.to_json.html_safe%>"}
+	{"menu_items":<%=@user.menus.first.menu_items.to_json.html_safe%>}
+}
