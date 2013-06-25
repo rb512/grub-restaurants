@@ -1,8 +1,9 @@
 GrubshireOnsite::Application.routes.draw do
 
-  devise_for :users
 
-  devise_for :user_restaurants
+  resources :restaurants
+
+  devise_for :owners
 
   resources :menus do
     resources :menu_items

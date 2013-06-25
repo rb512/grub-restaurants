@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311113500) do
+ActiveRecord::Schema.define(:version => 20130624063459) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
     t.integer  "menu_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "line_items", :force => true do |t|
+    t.integer  "order_id"
+    t.string   "item_name"
+    t.float    "item_price"
+    t.integer  "menu_item_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "menu_items", :force => true do |t|
@@ -35,12 +44,22 @@ ActiveRecord::Schema.define(:version => 20130311113500) do
     t.string   "name"
     t.boolean  "is_default"
     t.string   "menu_type"
-    t.integer  "user_restaurant_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "owner_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  create_table "user_restaurants", :force => true do |t|
+  create_table "orders", :force => true do |t|
+    t.integer  "table_id"
+    t.integer  "user_id"
+    t.integer  "server_id"
+    t.integer  "restaurant_id"
+    t.float    "total"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "owners", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
@@ -55,33 +74,37 @@ ActiveRecord::Schema.define(:version => 20130311113500) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.string   "authentication_token"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
   end
 
-  add_index "user_restaurants", ["confirmation_token"], :name => "index_user_restaurants_on_confirmation_token", :unique => true
-  add_index "user_restaurants", ["email"], :name => "index_user_restaurants_on_email", :unique => true
-  add_index "user_restaurants", ["reset_password_token"], :name => "index_user_restaurants_on_reset_password_token", :unique => true
+  add_index "owners", ["authentication_token"], :name => "index_owners_on_authentication_token", :unique => true
+  add_index "owners", ["confirmation_token"], :name => "index_owners_on_confirmation_token", :unique => true
+  add_index "owners", ["email"], :name => "index_owners_on_email", :unique => true
+  add_index "owners", ["reset_password_token"], :name => "index_owners_on_reset_password_token", :unique => true
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.string   "nfc"
+  create_table "restaurants", :force => true do |t|
+    t.string   "name"
+    t.integer  "owner_id"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
     t.string   "phone"
-    t.integer  "pin"
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "email"
+    t.integer  "zip"
+    t.integer  "menu_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  create_table "tablets", :force => true do |t|
+    t.integer  "restaurant_id"
+    t.string   "wifi_name"
+    t.string   "unique_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
 end

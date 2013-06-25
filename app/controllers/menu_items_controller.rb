@@ -1,11 +1,11 @@
 class MenuItemsController < ApplicationController
-  before_filter :authenticate_user_restaurant!
+  before_filter :authenticate_owner!
 
 
   # GET /menu_items/1
   # GET /menu_items/1.json
   def show
-    @menu = current_user_restaurant.menus.find(params[:menu_id])
+    @menu = current_owner.menus.find(params[:menu_id])
     @menu_item = @menu.menu_items.find(params[:id])
 
     respond_to do |format|
@@ -17,14 +17,14 @@ class MenuItemsController < ApplicationController
 
   # GET /menu_items/1/edit
   def edit
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @menu_item = @menu.menu_items.find(params[:menu_id])
   end
 
   # PUT /menu_items/1
   # PUT /menu_items/1.json
   def update
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @menu_item = @menu.menu_items.find(params[:menu_id])
 
     respond_to do |format|
@@ -44,7 +44,7 @@ class MenuItemsController < ApplicationController
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params}"
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:menu_id]}"
     puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:id]}"
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @menu_item = @menu.menu_items.find(params[:menu_id])
     @menu_item.destroy
 

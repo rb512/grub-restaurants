@@ -1,9 +1,9 @@
 class MenusController < ApplicationController
-  before_filter :authenticate_user_restaurant!
+  before_filter :authenticate_owner!
   # GET /menus
   # GET /menus.json
   def index
-    @menus = current_user_restaurant.menus.all
+    @menus = current_owner.menus.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +14,7 @@ class MenusController < ApplicationController
   # GET /menus/1
   # GET /menus/1.json
   def show
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @menu_items = @menu.menu_items
   end
 
@@ -22,7 +22,7 @@ class MenusController < ApplicationController
   # GET /menus/new.json
   def new
     session[:menu_params] ||= {}
-    @menu = current_user_restaurant.menus.new(session[:menu_params])
+    @menu = current_owner.menus.new(session[:menu_params])
     @categories = @menu.categories
     @menu.current_step = session[:menu_step]
   end
@@ -30,17 +30,17 @@ class MenusController < ApplicationController
   # GET /menus/1/edit
   def edit
     session[:menu_update_params] ||= {}
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @categories = @menu.categories
     session[:menu_id] = @menu.id
-    @menu.current_step = session[:menu_update_step]
+    session[:menu_step] = @menu.current_step
   end
 
   # POST /menus
   # POST /menus.json
   def create
     session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
-    @menu = current_user_restaurant.menus.new(session[:menu_params])
+    @menu = current_owner.menus.new(session[:menu_params])
     @categories = @menu.categories
     @menu.current_step = session[:menu_step]
     if params[:back_button]
@@ -64,9 +64,10 @@ class MenusController < ApplicationController
   # PUT /menus/1.json
   def update
     session[:menu_update_params].deep_merge!(params[:menu]) if params[:menu]
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @categories = @menu.categories
-    @menu.current_step = session[:menu_update_step]
+    @menu.current_step = session[:menu_step]
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CURRENT STEP #{session[:menu_steps]}"
     if params[:back_button]
       @menu.previous_step
     elsif @menu.last_step?
@@ -74,7 +75,8 @@ class MenusController < ApplicationController
     else
       @menu.next_step
     end
-    session[:menu_update_step] = @menu.current_step
+    
+    session[:menu_step] = @menu.current_step
     if @menu.changed?
       puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NOTHIN CHANGED! :("
       session[:menu_step]=session[:menu_params] = nil
@@ -85,7 +87,7 @@ class MenusController < ApplicationController
   end
 
   def destroy_menu_item
-    @menu = current_user_restaurant.menus.find(params[:menu_id])
+    @menu = current_owner.menus.find(params[:menu_id])
     @menu_item = @menu.menu_items.find(params[:id])
     @menu_item.destroy
     respond_to do |format|
@@ -97,7 +99,7 @@ class MenusController < ApplicationController
   # DELETE /menus/1
   # DELETE /menus/1.json
   def destroy
-    @menu = current_user_restaurant.menus.find(params[:id])
+    @menu = current_owner.menus.find(params[:id])
     @menu.destroy
 
     respond_to do |format|

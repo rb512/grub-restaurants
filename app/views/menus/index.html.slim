@@ -1,6 +1,7 @@
 h1 Listing Menus
 
-table class="table table-striped"
+div class="well"
+ table class="table"
   thead
     tr
       th Menu
@@ -10,9 +11,9 @@ table class="table table-striped"
       tr
         td= link_to menu.name, menu_path(menu)
         td
-          = link_to 'Edit', edit_menu_path(menu), :class => 'btn btn-mini'
-
-          = link_to 'Destroy', menu, :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
+		  = link_to '', edit_menu_path(menu), :class => 'icon-pencil'
+		  = " "
+		  = link_to '', menu, :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
 
 
 = link_to 'New Menu', new_menu_path, :class => 'btn btn-primary'

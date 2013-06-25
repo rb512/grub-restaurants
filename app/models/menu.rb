@@ -1,5 +1,5 @@
 class Menu < ActiveRecord::Base
-  belongs_to :user_restaurant
+  belongs_to :owner
   has_many :menu_items
   has_many :categories
 
