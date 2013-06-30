@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Serial:</b>
+  <%= @tablet.serial_id %>
+</p>
+
+<p>
+  <b>Restaurant:</b>
+  <%= @tablet.restaurant_id %>
+</p>
+
+<p>
+  <b>Owner:</b>
+  <%= @tablet.owner_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @tablet.type %>
+</p>
+
+<p>
+  <b>Ip address:</b>
+  <%= @tablet.ip_address %>
+</p>
+
+
+<%= link_to 'Edit', edit_tablet_path(@tablet) %> |
+<%= link_to 'Back', tablets_path %>
