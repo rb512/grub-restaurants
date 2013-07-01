@@ -19,13 +19,14 @@ class MenuItemsController < ApplicationController
   def edit
     @menu = current_owner.menus.find(params[:id])
     @menu_item = @menu.menu_items.find(params[:menu_id])
+    @categories = get_categories(@menu)
   end
 
   # PUT /menu_items/1
   # PUT /menu_items/1.json
   def update
-    @menu = current_owner.menus.find(params[:id])
-    @menu_item = @menu.menu_items.find(params[:menu_id])
+    @menu = current_owner.menus.find(params[:menu_item][:menu_id])
+    @menu_item = @menu.menu_items.find(params[:id])
 
     respond_to do |format|
       if @menu_item.update_attributes(params[:menu_item])
@@ -40,10 +41,8 @@ class MenuItemsController < ApplicationController
 
   # DELETE /menu_items/1
   # DELETE /menu_items/1.json
+  
   def destroy
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params}"
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:menu_id]}"
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #{params[:id]}"
     @menu = current_owner.menus.find(params[:id])
     @menu_item = @menu.menu_items.find(params[:menu_id])
     @menu_item.destroy
@@ -52,5 +51,11 @@ class MenuItemsController < ApplicationController
       format.html { redirect_to menu_path(@menu_item.menu) }
       format.json 
     end
+  end
+  
+  private
+  def get_categories(menu)
+    categories = []
+    menu.categories.each {|category| categories << category.name}
   end
 end

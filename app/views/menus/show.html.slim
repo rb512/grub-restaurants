@@ -1,8 +1,3 @@
-div class="page_header"
-	h1 =@menu.name 
-	   
-	
-
 h3 Menu Items
 
 table class="table table-striped"
@@ -13,6 +8,7 @@ table class="table table-striped"
    th Item Price
    th Category	
    th Actions
+   th
   -@menu.menu_items.each do |item|
     tr
 	  td= image_tag item.item_asset.url(:small)
@@ -20,8 +16,9 @@ table class="table table-striped"
       td= item.description
       td= item.price
 	  td= item.category
-	  td= link_to 'Destroy', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-mini btn-danger'
-
+	  td= link_to '', edit_menu_menu_item_path(item), :class => 'icon-pencil' 
+	  td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
+	  
 
 = link_to 'Edit', edit_menu_path(@menu)
 = '|'

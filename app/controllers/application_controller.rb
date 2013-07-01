@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   def current_user
     return current_user_restuarant
   end
+  
 end

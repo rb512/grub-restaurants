@@ -16,6 +16,7 @@ gem 'devise'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'fog'
+gem 'will_paginate'
 gem 'newrelic_rpm'
 ruby '1.9.3'
 # Gems used only for assets and not required

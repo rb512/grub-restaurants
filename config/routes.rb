@@ -2,13 +2,20 @@ GrubshireOnsite::Application.routes.draw do
 
 
   resources :restaurants
-
+  resources :tablets
   devise_for :owners
 
   resources :menus do
     resources :menu_items
   end
 
+  resources :menu_items
+  namespace :grubshire_api do
+    namespace :v1  do
+      resources :tokens,:only => [:create, :destroy]
+    end
+  end
+  
   root :to => 'menus#index'
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   # match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'

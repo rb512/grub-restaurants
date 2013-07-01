@@ -58,7 +58,6 @@ class RestaurantsController < ApplicationController
   # PUT /restaurants/1
   # PUT /restaurants/1.json
   def update
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PARAMSS #{params["restaurant"]["menu_id"]}"
     menu_name = params["restaurant"]["menu_id"]
     params["restaurant"]["menu_id"] = get_menu_id(menu_name)
     @restaurant = current_owner.restaurants.find(params[:id])

@@ -15,7 +15,7 @@ class MenusController < ApplicationController
   # GET /menus/1.json
   def show
     @menu = current_owner.menus.find(params[:id])
-    @menu_items = @menu.menu_items
+    @menu_items = @menu.menu_items.paginate(:per_page => 5, :page => params[:page])
   end
 
   # GET /menus/new
@@ -63,27 +63,17 @@ class MenusController < ApplicationController
   # PUT /menus/1
   # PUT /menus/1.json
   def update
-    session[:menu_update_params].deep_merge!(params[:menu]) if params[:menu]
     @menu = current_owner.menus.find(params[:id])
-    @categories = @menu.categories
-    @menu.current_step = session[:menu_step]
-    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CURRENT STEP #{session[:menu_steps]}"
-    if params[:back_button]
-      @menu.previous_step
-    elsif @menu.last_step?
-      @menu = @menu.update_attributes(session[:menu_update_params])
-    else
-      @menu.next_step
+    respond_to do |format|
+      if @menu.update_attributes(params[:menu])
+        format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @menu.errors, status: :unprocessable_entity }
+      end
     end
     
-    session[:menu_step] = @menu.current_step
-    if @menu.changed?
-      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NOTHIN CHANGED! :("
-      session[:menu_step]=session[:menu_params] = nil
-      redirect_to @menu, notice: "Menu was successfully updated."
-    else
-      render "edit"
-    end
   end
 
   def destroy_menu_item
