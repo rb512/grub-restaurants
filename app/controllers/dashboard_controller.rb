@@ -9,6 +9,7 @@ class DashboardController < ApplicationController
   end
   
   def my_account
+    current_owner.ensure_authentication_token!
     @auth_token = current_owner.authentication_token
   end
 end
