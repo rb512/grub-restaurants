@@ -15,10 +15,14 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1.json
   def show
     @restaurant = current_owner.restaurants.find(params[:id])
-    @menu = get_menu_name(@restaurant.menu_id)
+    @menu_name = get_menu_name(@restaurant.menu_id)
+    @menu = current_owner.menus.find(@restaurant.menu_id)
+    @menu_items = @menu.menu_items
+    
+    
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @restaurant }
+      format.json { render :json => {:restaurant => @restaurant, :menu => @menu, :menu_items => @menu_items} }
     end
   end
 

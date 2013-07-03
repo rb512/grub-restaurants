@@ -7,4 +7,8 @@ class DashboardController < ApplicationController
       format.json {@user}
     end
   end
+  
+  def my_account
+    @auth_token = current_owner.authentication_token
+  end
 end
