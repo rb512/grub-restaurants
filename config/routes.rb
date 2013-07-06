@@ -2,7 +2,6 @@ GrubshireOnsite::Application.routes.draw do
 
 
   resources :restaurants
-  resources :tablets
   devise_for :owners
 
   resources :menus do
