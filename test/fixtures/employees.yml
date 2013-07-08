@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  restaurant_id: 1
+  owner_id: 1
+  name: MyString
+  category: MyString
+  phone: MyString
+  email: MyString
+  feedback_score: 1.5
+  avatar: MyString
+
+two:
+  restaurant_id: 1
+  owner_id: 1
+  name: MyString
+  category: MyString
+  phone: MyString
+  email: MyString
+  feedback_score: 1.5
+  avatar: MyString

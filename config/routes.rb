@@ -1,6 +1,8 @@
 GrubshireOnsite::Application.routes.draw do
 
 
+  resources :employees
+
   resources :restaurants
   devise_for :owners
 
