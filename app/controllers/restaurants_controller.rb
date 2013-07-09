@@ -15,10 +15,14 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/1.json
   def show
     @restaurant = current_owner.restaurants.find(params[:id])
-    @menu_name = get_menu_name(@restaurant.menu_id)
-    @menu = current_owner.menus.find(@restaurant.menu_id)
-    @menu_items = @menu.menu_items
-    
+    if @restaurant.menu_id.nil?
+      @menu = {}
+    else
+      @menu_name = get_menu_name(@restaurant.menu_id)
+      @menu = current_owner.menus.find(@restaurant.menu_id)
+      @menu_items = @menu.menu_items
+      
+    end
     
     respond_to do |format|
       format.html # show.html.erb
@@ -39,8 +43,8 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1/edit
   def edit
-    @restaurant = current_owner.restaurants.find(params[:id])
     @menus = get_menus()
+    @restaurant = current_owner.restaurants.find(params[:id])
   end
 
   # POST /restaurants
@@ -63,9 +67,10 @@ class RestaurantsController < ApplicationController
   # PUT /restaurants/1.json
   def update
     menu_name = params["restaurant"]["menu_id"]
-    params["restaurant"]["menu_id"] = get_menu_id(menu_name)
-    @restaurant = current_owner.restaurants.find(params[:id])
-
+    if !menu_name.nil?
+      params["restaurant"]["menu_id"] = get_menu_id(menu_name)
+      @restaurant = current_owner.restaurants.find(params[:id])
+    end
     respond_to do |format|
       if @restaurant.update_attributes(params[:restaurant])
         format.html { redirect_to @restaurant, notice: 'Restaurant was successfully updated.' }
@@ -92,15 +97,22 @@ class RestaurantsController < ApplicationController
   private
   
   def get_menu_id(menu_name)
-    return current_owner.menus.find_by_name(menu_name).id
+    return current_owner.menus.find_by_name(menu_name).id if !current_owner.menus.empty?
   end
   
   def get_menu_name(menu_id)
-    return current_owner.menus.find(menu_id).name
+    menu_name = ""
+    if !current_owner.menus.empty?
+      menu_name = current_owner.menus.find(menu_id).name
+    end
   end
   
   def get_menus()
     menus = []
-    current_owner.menus.each {|menu| menus << menu.name}
+    if current_owner.menus.empty?
+      menus = [" "]
+    else
+      current_owner.menus.each {|menu| menus << menu.name}
+    end
   end
 end

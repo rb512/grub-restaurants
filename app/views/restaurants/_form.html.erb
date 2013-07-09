@@ -10,7 +10,8 @@
     <%= f.input :phone %>
     <%= f.input :email %>
     <%= f.input :zip %>
-	<%=f.select :menu_id, @menus.collect {|menu| [menu.name] }%>
+	<%=f.label "Menu"%>
+	<%=f.select :menu_id, @restaurant.get_menus%>
   </div>
   
   <div class="form-actions">
