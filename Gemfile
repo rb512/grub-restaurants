@@ -19,7 +19,7 @@ gem 'fog'
 gem 'will_paginate'
 gem 'newrelic_rpm'
 ruby '1.9.3'
-gem 'mysql2', '0.3.0'
+gem 'mysql2', '~> 0.3.10'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

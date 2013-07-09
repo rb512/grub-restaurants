@@ -87,7 +87,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.21)
     multi_json (1.6.1)
-    mysql2 (0.3.0)
+    mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.3)
@@ -176,7 +176,7 @@ DEPENDENCIES
   devise
   fog
   jquery-rails
-  mysql2 (= 0.3.0)
+  mysql2 (~> 0.3.10)
   newrelic_rpm
   rails (= 3.2.3)
   rmagick
