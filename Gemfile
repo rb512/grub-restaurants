@@ -19,6 +19,7 @@ gem 'fog'
 gem 'will_paginate'
 gem 'newrelic_rpm'
 ruby '1.9.3'
+gem 'mysql2', '0.3.0'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -30,13 +31,13 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
-group :development do 
-  gem 'sqlite3'
-end
+#group :development do 
+#  gem 'sqlite3'
+#end
 gem 'jquery-rails'
-group :production do
-  gem 'pg'	
-end
+#group :production do
+#  gem 'pg'	
+#end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
