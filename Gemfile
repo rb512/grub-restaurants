@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'asset_sync'
+# gem 'asset_sync'
 gem 'rails', '3.2.3'
 gem 'twitter-bootstrap-rails'
 # Bundle edge Rails instead:

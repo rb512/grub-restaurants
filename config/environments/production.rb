@@ -3,9 +3,9 @@ GrubshireOnsite::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
-  config.action_mailer.default_url_options = { :host => "restaurants.grubshire.com" }
+
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -19,6 +19,21 @@ GrubshireOnsite::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.perform_deliveries = true
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  :address            => 'smtp.gmail.com',
+  :port               => 25,
+  :domain             => 'grubshire.com',
+  :authentication     => :plain,
+  :user_name          => 'rahul@grubshire.com',
+  :password           => ENV['mail_password'],
+  :enable_starttls_auto => true,
+  :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE
+}
+  
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
@@ -43,7 +58,8 @@ GrubshireOnsite::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  config.action_controller.asset_host = "https://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  # config.action_controller.asset_host = "http://assets.example.com"
+
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
@@ -60,19 +76,6 @@ GrubshireOnsite::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.perform_deliveries = true
-  ActionMailer::Base.raise_delivery_errors = true
-  ActionMailer::Base.smtp_settings = {
-    :address            => 'smtp.gmail.com',
-    :port               => 25,
-    :domain             => 'grubshire.com',
-    :authentication     => :plain,
-    :user_name          => 'rahul@grubshire.com',
-    :password           => ENV['mail_password'],
-    :enable_starttls_auto => true,
-    :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE
-  }
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
