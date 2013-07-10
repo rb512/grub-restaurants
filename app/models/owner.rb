@@ -2,6 +2,7 @@ class Owner < ActiveRecord::Base
   has_many :menus
   has_many :restaurants
   has_many :employees
+  has_many :tablets
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable

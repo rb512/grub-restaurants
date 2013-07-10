@@ -1,6 +1,7 @@
 GrubshireOnsite::Application.routes.draw do
 
-
+  resources :tablets
+  
   resources :employees
 
   resources :restaurants

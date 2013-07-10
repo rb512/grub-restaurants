@@ -1,0 +1,28 @@
+<h1>Listing tablets</h1>
+
+<table>
+  <tr>
+    <th>Restaurant</th>
+    <th>Ip address</th>
+    <th>Is server</th>
+    <th>Owner</th>
+    <th>Serial no</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tablets.each do |tablet| %>
+  <tr>
+    <td><%= tablet.restaurant_id %></td>
+    <td><%= tablet.ip_address %></td>
+    <td><%= tablet.is_server %></td>
+    <td><%= tablet.owner_id %></td>
+    <td><%= tablet.serial_no %></td>
+    <td><%= link_to 'Show', tablet %></td>
+    <td><%= link_to 'Edit', edit_tablet_path(tablet) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
