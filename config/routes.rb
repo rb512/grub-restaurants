@@ -12,9 +12,11 @@ GrubshireOnsite::Application.routes.draw do
   end
 
   resources :menu_items
-  namespace :grubshire_api do
+  
+  namespace :api, defaults: {format: :json} do
     namespace :v1  do
-      resources :tokens,:only => [:create, :destroy]
+      match 'get_data' => 'grub_client#get_data', :as => 'get_data'
+      match 'register_tablet' => 'grub_client#register_tablet'
     end
   end
   
