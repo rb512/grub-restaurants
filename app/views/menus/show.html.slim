@@ -3,7 +3,7 @@ h3 Menu Items
 table class="table table-striped"
   tr
    th 
-   th Item Name
+
    th Item Description
    th Item Price
    th Category	
@@ -11,7 +11,7 @@ table class="table table-striped"
    th
   -@menu.menu_items.each do |item|
     tr
-	  td= image_tag item.item_asset.url(:small)
+
       td= item.name
       td= item.description
       td= item.price
