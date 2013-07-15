@@ -17,6 +17,7 @@ GrubshireOnsite::Application.routes.draw do
     namespace :v1  do
       match 'get_data' => 'grub_client#get_data', :as => 'get_data'
       match 'register_tablet' => 'grub_client#register_tablet'
+      match 'get_server_ip' => 'grub_client#get_server_ip'
     end
   end
   

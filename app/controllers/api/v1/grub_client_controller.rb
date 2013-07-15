@@ -1,4 +1,5 @@
 class Api::V1::GrubClientController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   before_filter :authenticate_owner!
   respond_to :json
   
@@ -19,6 +20,17 @@ class Api::V1::GrubClientController < ApplicationController
     
   end
   
+  def get_server_ip
+    serial_no = params[:serial_number]
+    tablet = current_owner.tablets.where(:serial_no => serial_no).first
+    if tablet.nil?
+     render :status => 400, :json => {:message => 'This tablet is not registered with your restaurant'}
+   else
+     server_ip = current_owner.tablets.where(:is_server => true).first
+     render :status => 200, :json => {:server_ip => server_ip.ip_address}
+   end
+  end
+  
   def get_data
     serial_no = params[:serial_number]
     tablet = current_owner.tablets.where(:serial_no => serial_no).first
@@ -32,7 +44,7 @@ class Api::V1::GrubClientController < ApplicationController
       if menu.nil? or menu_items.empty? or employees.empty?
         render :status => 400, :json => {:message => "You haven't added a menu or employees yet.  Please login to your grubshire account to add missing information."}
       else
-        render :status => 200, :json =>{:menu_items => menu_items, :employees => employees}
+        render :status => 200, :json =>{:restaurant_id =>restaurant.id, :menu_items => menu_items, :employees => employees}
       end
     end
   end

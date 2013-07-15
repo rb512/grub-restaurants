@@ -1,6 +1,8 @@
 <h1>Listing tablets</h1>
 
-<table>
+	<div class="well">
+	<table class="table">
+		<thead>
   <tr>
     <th>Restaurant</th>
     <th>Ip address</th>
@@ -10,19 +12,20 @@
     <th></th>
     <th></th>
     <th></th>
+	
   </tr>
-
+</thead>
 <% @tablets.each do |tablet| %>
+<tbody>
   <tr>
-    <td><%= tablet.restaurant_id %></td>
+    <td><%= tablet.restaurant.name %></td>  
     <td><%= tablet.ip_address %></td>
     <td><%= tablet.is_server %></td>
-    <td><%= tablet.owner_id %></td>
+    <td><%= tablet.owner.email %></td>
     <td><%= tablet.serial_no %></td>
-    <td><%= link_to 'Show', tablet %></td>
-    <td><%= link_to 'Edit', edit_tablet_path(tablet) %></td>
   </tr>
+</tbody>
 <% end %>
 </table>
-
+</div>
 <br />

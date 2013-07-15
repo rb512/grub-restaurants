@@ -1,37 +1,37 @@
 <h1>Listing employees</h1>
 
-<table>
+<div class="well">
+<table class="table">
+	<thead>
   <tr>
-    <th>Restaurant</th>
-    <th>Owner</th>
     <th>Name</th>
+	<th>Avatar</th>
+    <th>Restaurant</th>
     <th>Category</th>
-    <th>Phone</th>
-    <th>Email</th>
-    <th>Feedback score</th>
-    <th>Avatar</th>
+  
     <th></th>
     <th></th>
     <th></th>
   </tr>
+</thead>
 
 <% @employees.each do |employee| %>
+<tbody>
   <tr>
-    <td><%= employee.restaurant_id %></td>
-    <td><%= employee.owner_id %></td>
-    <td><%= employee.name %></td>
+	<td><%= employee.name %></td>  
+    <td><%= image_tag employee.avatar.url(:small) %></td>
+    <td><%= employee.restaurant.name %></td>
     <td><%= employee.category %></td>
-    <td><%= employee.phone %></td>
-    <td><%= employee.email %></td>
-    <td><%= employee.feedback_score %></td>
-    <td><%= employee.avatar %></td>
+    
     <td><%= link_to 'Show', employee %></td>
     <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
     <td><%= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
+</tbody>
 <% end %>
-</table>
 
+</table>
+</div>
 <br />
 
 <%= link_to 'New Employee', new_employee_path %>
