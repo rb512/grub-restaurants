@@ -1,10 +1,5 @@
 h3 Menu Items
-p
- = link_to 'Edit', edit_menu_path(@menu)
- = '|'
- = link_to 'Back', menus_path
- = '|'
- = link_to 'Add New Item', new_menu_menu_item_path(@menu)
+
 table class="table table-striped"
   tr
    th 
@@ -23,4 +18,10 @@ table class="table table-striped"
 	  td= item.category
 	  td= link_to '', edit_menu_menu_item_path(item), :class => 'icon-pencil' 
 	  td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
-	  -will_paginate @menu_items
+  	=will_paginate @menu_items, :renderer => SearchPagination::LinkRenderer
+p
+ = link_to 'Edit', edit_menu_path(@menu), :class => 'btn btn-primary'
+ 
+ = link_to 'Back', menus_path, :class => 'btn btn-primary'
+ = '|'
+ = link_to 'Add New Item', new_menu_menu_item_path(@menu)

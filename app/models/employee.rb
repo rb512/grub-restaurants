@@ -4,4 +4,5 @@ class Employee < ActiveRecord::Base
   
   mount_uploader :avatar, AvatarUploader
   attr_accessible :avatar, :category, :email, :feedback_score, :name, :owner_id, :phone, :restaurant_id, :avatar
+  
 end

@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     @employees = current_owner.employees.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @employees }
@@ -83,8 +83,10 @@ class EmployeesController < ApplicationController
     end
   end
   
+  
   private
   def category
     category = ["Server", "Manager", "Kitchen Staff", "Cashier"]
   end
+  
 end
