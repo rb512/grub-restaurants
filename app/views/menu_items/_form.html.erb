@@ -1,39 +1,13 @@
-<%= form_for @menu_item, :html => {:multipart => true},  :class => 'form-horizontal' do |f| %>
-  <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :description, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :description, :class => 'text_area', :rows => "10", :cols => "50"  %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :price, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :price, :class => 'text_field'%>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :category, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select(:category, @categories.collect {|category| [ category.name] })%>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :item_asset, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.file_field :item_asset, :class => 'text_field' %>
-    </div>
-  </div>	
-  <div class="control-group">
-    <div class="controls">
-      <%= f.hidden_field :menu_id, :value => @menu.id %>
-    </div>
-  </div>
+<%= simple_form_for @menu_item, :html => {:multipart => true},  :class => 'form-horizontal' do |f| %>
+	  <%= f.error_notification %>
+	  <div class="form-inputs">
+		  <%=f.input :name%>
+		  <%=f.input :description%>
+    	  <%=f.input :price%>
+		  <%=f.select :category, @categories.collect {|category| [category.name]}%>
+		  <%=f.input :item_asset%>
+	  </div>	
+	  <%=f.hidden_field :menu_id, :value => @menu_item.menu_id%>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>

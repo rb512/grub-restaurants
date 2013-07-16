@@ -38,4 +38,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
        "#{Rails.root}/tmp/uploads"
       end
   
+      def default_url
+        "/assets/" + [version_name, "no_image.png"].compact.join('_')
+      end
 end

@@ -7,8 +7,8 @@ class ItemAssetUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
-  # include Sprockets::Helpers::RailsHelper
-  # include Sprockets::Helpers::IsolatedHelper
+  include Sprockets::Helpers::RailsHelper
+  include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
   #storage :file
@@ -40,8 +40,11 @@ class ItemAssetUploader < CarrierWave::Uploader::Base
          %w(jpg jpeg gif png)
        end
   
-      def cache_dir
-       "#{Rails.root}/tmp/uploads"
-      end
+    def cache_dir
+     "#{Rails.root}/tmp/uploads"
+    end
 
+    def default_url
+      asset_path("/images/fallback/"+[version_name, "no_image.png"].compact.join('_'))
+    end
 end

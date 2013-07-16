@@ -14,6 +14,11 @@ class MenuItemsController < ApplicationController
     end
   end
 
+  def new
+    @menu = current_owner.menus.find(params[:menu_id])
+    @menu_item = @menu.menu_items.new
+    @categories = get_categories(@menu)
+  end
 
   # GET /menu_items/1/edit
   def edit
@@ -22,6 +27,20 @@ class MenuItemsController < ApplicationController
     @categories = get_categories(@menu)
   end
 
+  def create
+    @menu = current_owner.menus.find(params[:menu_item][:menu_id])
+    @menu_item = @menu.menu_items.new(params[:menu_item])
+    @categories = get_categories(@menu)
+    respond_to do |format|
+      if @menu_item.save
+        format.html {redirect_to menu_path(@menu_item.menu), notice: "Menu item was successfully added."}
+        format.json {head :no_content}
+      else
+        format.html {render action: "new"}
+        format.json {render json: @menu_item.errors, status: :unprocessable_entity}
+      end
+    end
+  end
   # PUT /menu_items/1
   # PUT /menu_items/1.json
   def update
