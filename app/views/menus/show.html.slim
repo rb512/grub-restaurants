@@ -18,7 +18,7 @@ table class="table table-striped"
 	  td= item.category
 	  td= link_to '', edit_menu_menu_item_path(item), :class => 'icon-pencil' 
 	  td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
-  	=will_paginate @menu_items, :renderer => SearchPagination::LinkRenderer
+  =will_paginate @menu_items, :renderer => SearchPagination::LinkRenderer
 p
  = link_to 'Edit', edit_menu_path(@menu), :class => 'btn btn-primary'
  
