@@ -10,9 +10,9 @@
     <%= f.input :phone %>
     <%= f.input :email %>
     <%= f.input :zip %>
-	<%=f.label "Menu"%>
-	<%=f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'} %>
-  </div>
+	<%=f.label "Menu", :class => 'control-label'%>
+	<%=f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'}%>
+ </div>
   
   <div class="form-actions">
     <%= f.button :submit %>
