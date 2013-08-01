@@ -4,7 +4,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
-  process resize_and_pad:[161,161,"#000000"]
   # include CarrierWave::MiniMagick
 
   # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
@@ -20,18 +19,17 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
-
-  # version :small do
- #      process :resize_to_limit => [30,30]
- #    end
- #    version :medium do
- #      process :resize_and_pad => [161,161,"#FF0000"]
- #      # process :resize_to_limit => [161, 161]
- #    end
- #    version :large do 
- #      process :resize_to_limit => [267,267]
- #    end
-    
+  
+     version :small do
+       process :resize_to_limit => [30,30]
+     end
+     version :medium do
+       process :resize_to_limit => [161, 161]
+     end
+     version :large do 
+       process :resize_to_limit => [267,267]
+     end
+     
     def extension_white_list
          %w(jpg jpeg gif png)
        end
