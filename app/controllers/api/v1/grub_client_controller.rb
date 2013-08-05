@@ -48,5 +48,22 @@ class Api::V1::GrubClientController < ApplicationController
       end
     end
   end
+  
+  def rate_server
+    serial_no = params[:serial_number]
+    rating = params[:rating].to_f
+    server = current_owner.employees.find_by_name(params[:server_name])
+    tablet = current_owner.tablets.where(:serial_no => serial_no).first
+    if tablet.nil?
+      render :status => 400, :json => {:message => 'This tablet is not registered with your restaurant'}
+    else
+      server.rating = 0.0 if server.rating.nil?
+      server.rating_count = 0 if server.rating_count.nil?
+      rating += server.rating
+      rating_count = server.rating_count + 1
+      server.update_attributes(:rating => rating, :rating_count =>rating_count)
+      render :status => 200
+    end
+  end
    
 end
