@@ -7,7 +7,8 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :category
       t.string :phone
       t.string :email
-      t.float :feedback_score
+      t.float :rating
+      t.integer :rating_count
       t.string :avatar
 
       t.timestamps
