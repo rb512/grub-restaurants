@@ -15,7 +15,12 @@ class EmployeesController < ApplicationController
   # GET /employees/1.json
   def show
     @employee = current_owner.employees.find(params[:id])
-
+    @rating = 0.0
+    if @employee.category == 'Server'
+      @rating = (@employee.rating/@employee.rating_count)
+      @rating = (@rating*100).round/100.0
+      @rating_count = @employee.rating_count
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @employee }

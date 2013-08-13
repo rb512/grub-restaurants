@@ -8,9 +8,8 @@
 	<th>Avatar</th>
     <th>Restaurant</th>
     <th>Category</th>
-  
     <th></th>
-    <th></th>
+    <th>Actions</th>
     <th></th>
   </tr>
 </thead>
@@ -25,7 +24,7 @@
     
     <td><%= link_to 'Show', employee %></td>
     <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-    <td><%= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Delete', employee, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 </tbody>
 <% end %>

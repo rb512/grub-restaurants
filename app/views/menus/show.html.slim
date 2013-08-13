@@ -20,8 +20,8 @@ table class="table table-striped"
 	  td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
   =will_paginate @menu_items, :renderer => SearchPagination::LinkRenderer
 p
- = link_to 'Edit', edit_menu_path(@menu), :class => 'btn btn-primary'
- 
- = link_to 'Back', menus_path, :class => 'btn btn-primary'
- = '|'
+ = link_to 'Edit', edit_menu_path(@menu)
+ = ' | '
+ = link_to 'Back', menus_path
+ = ' | '
  = link_to 'Add New Item', new_menu_menu_item_path(@menu)

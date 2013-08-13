@@ -1,4 +1,5 @@
 class Api::V1::GrubClientController < ApplicationController
+  require 'json'
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
   before_filter :authenticate_owner!
   respond_to :json
@@ -57,13 +58,42 @@ class Api::V1::GrubClientController < ApplicationController
     if tablet.nil?
       render :status => 400, :json => {:message => 'This tablet is not registered with your restaurant'}
     else
-      server.rating = 0.0 if server.rating.nil?
-      server.rating_count = 0 if server.rating_count.nil?
-      rating += server.rating
-      rating_count = server.rating_count + 1
-      server.update_attributes(:rating => rating, :rating_count =>rating_count)
-      render :status => 200
+      server.rating+=rating
+      server.rating_count+=1
+      if server.save
+        render :status => 200, :json => {:message => 'Rating submitted'}
+      else
+        render :status => 400, :json => {:message => 'Error occured while saving record'}
+      end
     end
+  end
+   
+  def submit_order
+    temp_order = params["order"].as_json
+    ordah = temp_order.gsub(':','=>')
+    orduh = eval(ordah)
+    serial_number = orduh["serial_number"]
+    tablet = current_owner.tablets.where(:serial_no => serial_number).first
+    server = current_owner.employees.where(:name => orduh["server_name"]).first
+    if server.nil?
+      render :status => 400, :json => {:message => "Access Denied!"}
+    else
+      restaurant = server.restaurant
+      order = restaurant.orders.new(:total => orduh["total"], :server_id => server.id, :tablet_id =>tablet.id)
+      order_items = orduh["order_items"]
+      order_items.each do |order_item|
+        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#{order_item}"
+        menu_item = MenuItem.find_by_name(order_item["name"])
+        order.order_items.build(:name => order_item["name"], :quantity => order_item["quantity"], :menu_item_id => menu_item.id)
+      end
+      if order.save
+        render :status => 200, :json => {:message => 'Order Submitted Successfully!'}
+      else
+        render :status => 400, :json => {:message => "Access Denied!"}
+      end
+    end
+    
+    
   end
    
 end

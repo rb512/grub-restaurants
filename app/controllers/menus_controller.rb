@@ -103,6 +103,10 @@ class MenusController < ApplicationController
     end
   end
   
+  def daily_special
+    
+  end
+  
   private
   def get_categories(menu)
     categories = []

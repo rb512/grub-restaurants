@@ -18,12 +18,15 @@ GrubshireOnsite::Application.routes.draw do
       match 'get_data' => 'grub_client#get_data', :as => 'get_data'
       match 'register_tablet' => 'grub_client#register_tablet'
       match 'get_server_ip' => 'grub_client#get_server_ip'
+      match 'rate_server' => 'grub_client#rate_server'
+      match 'submit_order' => 'grub_client#submit_order'
     end
   end
   
   root :to => 'menus#index'
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   match 'my_account' => 'dashboard#my_account', :as => 'my_account'
+  match 'daily_special' => 'menus#daily_special', :as => 'daily_special'
   # match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'
 #   match 'create_menu_item' => 'menus#create_menu_item', :as => 'create_menu_item'
 #   

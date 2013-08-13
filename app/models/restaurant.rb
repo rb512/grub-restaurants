@@ -2,6 +2,7 @@ class Restaurant < ActiveRecord::Base
   belongs_to :owner
   has_many :tablets
   has_many :employees
+  has_many :orders
   attr_accessible :address, :city, :country, :email, :menu_id, :name, :owner_id, :phone, :state, :zip
   
   validates_presence_of :address, :city, :country, :email, :name, :owner_id, :phone, :state

@@ -66,6 +66,7 @@ class RestaurantsController < ApplicationController
   # PUT /restaurants/1
   # PUT /restaurants/1.json
   def update
+    puts "RESTAURANT ID : #{params[:id]}"
     @current_owner.restaurants.find(params[:id])
     respond_to do |format|
       if @restaurant.update_attributes(params[:restaurant])
