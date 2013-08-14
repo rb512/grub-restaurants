@@ -18,7 +18,7 @@ class EmployeesController < ApplicationController
     @rating = 0.0
     if @employee.category == 'Server'
       @rating = (@employee.rating/@employee.rating_count)
-      @rating = (@rating*100).round/100.0
+      @rating = (@rating*100).round/100.0 if @rating > 0.0
       @rating_count = @employee.rating_count
     end
     respond_to do |format|
