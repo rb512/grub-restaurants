@@ -47,7 +47,7 @@ class MenuItemsController < ApplicationController
     puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{params}"
     @menu = current_owner.menus.find(params[:menu_item][:menu_id])
     @menu_item = @menu.menu_items.find(params[:id])
-
+    @categories = get_categories(@menu)
     respond_to do |format|
       if @menu_item.update_attributes(params[:menu_item])
         format.html { redirect_to menu_path(@menu_item.menu), notice: 'Menu item was successfully updated.' }
