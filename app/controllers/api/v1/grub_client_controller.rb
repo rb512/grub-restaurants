@@ -70,8 +70,12 @@ class Api::V1::GrubClientController < ApplicationController
    
   def submit_order
     temp_order = params["order"].as_json
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECEIVED ORDER : #{params['order']}"
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORMATTED JSON : #{temp_order}" 
     ordah = temp_order.gsub(':','=>')
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ converted ordah : #{ordah}" 
     orduh = eval(ordah)
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ eval orduh : #{orduh}" 
     serial_number = orduh["serial_number"]
     tablet = current_owner.tablets.where(:serial_no => serial_number).first
     server = current_owner.employees.where(:name => orduh["server_name"]).first

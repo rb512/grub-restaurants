@@ -44,6 +44,7 @@ class MenuItemsController < ApplicationController
   # PUT /menu_items/1
   # PUT /menu_items/1.json
   def update
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #{params}"
     @menu = current_owner.menus.find(params[:menu_item][:menu_id])
     @menu_item = @menu.menu_items.find(params[:id])
 
