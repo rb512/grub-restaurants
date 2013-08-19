@@ -59,6 +59,16 @@ after "deploy:restart", "deploy:cleanup"
 #Add database.yml to new release
 before "deploy:assets:precompile", "deploy:db:symlink" 
  
+#Run db:config after deploy:setup
+after 'deploy:setup', 'deploy:db:configure'
+after 'deploy:db:configure', 'deploy'
+
+#Restart rails after assets:precompile
+after 'deploy:assets:precompile', 'deploy:restart'
+
+#Remove db.yml after cleanup
+after 'deploy:cleanup', 'deploy:db:remove_db_yml' 
+
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
     # Start nginx server using sudo (rails)
@@ -133,6 +143,11 @@ namespace :deploy do
     desc "Make symlink for database yaml"
     task :symlink do
       run "ln -nfs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
+    end
+    
+    desc "Remove database.yml file from current"
+    task :remove_db_yml do
+      run "rm #{current_path}/config/database.yml"
     end
   end
   
