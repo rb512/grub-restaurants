@@ -8,7 +8,6 @@ require "bundler/capistrano"
 
 # RVM integration
 require "rvm/capistrano"
-require "capistrano_database_yml" 
 # Application name
 set :application, "grub-restaurants"
  
