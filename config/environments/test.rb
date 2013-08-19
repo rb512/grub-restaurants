@@ -10,7 +10,7 @@ GrubshireOnsite::Application.configure do
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
-
+  config.action_mailer.default_url_options = { :host => 'test.grubshire.com' }
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
@@ -32,6 +32,19 @@ GrubshireOnsite::Application.configure do
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :address            => 'smtp.gmail.com',
+    :port               => 25,
+    :domain             => 'grubshire.com',
+    :authentication     => :plain,
+    :user_name          => 'rahul@grubshire.com',
+    :password           => ENV['mail_password'],
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE
+  }
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 end
