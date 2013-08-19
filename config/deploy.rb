@@ -56,6 +56,9 @@ after "assets:precompile", "deploy:fix_permissions"
 # Clean-up old releases
 after "deploy:restart", "deploy:cleanup"
  
+#Add database.yml to new release
+before "deploy:assets:precompile", "deploy:db:symlink" 
+ 
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
     # Start nginx server using sudo (rails)
@@ -86,50 +89,52 @@ namespace :deploy do
   end
  
   namespace :db do
-
-    desc <<-DESC
-      Creates the database.yml configuration file in shared path.
-
-      By default, this task uses a template unless a template \
-      called database.yml.erb is found either is :template_dir \
-      or /config/deploy folders. The default template matches \
-      the template for config/database.yml file shipped with Rails.
-
-      When this recipe is loaded, db:setup is automatically configured \
-      to be invoked after deploy:setup. You can skip this task setting \
-      the variable :skip_db_setup to true. This is especially useful \ 
-      if you are using this recipe in combination with \
-      capistrano-ext/multistaging to avoid multiple db:setup calls \ 
-      when running deploy:setup for all stages one by one.
-    DESC
-    task :setup, :except => { :no_release => true } do
-
-      default_template = <<-EOF
-      base: &base
-      production:
-        database: #{shared_path}/db/production.sqlite3
-        <<: *base
+    desc "Create database yaml in shared path"
+    task :configure do
+      set :database_username do
+        "root"
+      end
+ 
+      set :database_password do
+        Capistrano::CLI.password_prompt "Database Password: "
+       end
+ 
+      db_config = <<-EOF
+        base: &base
+          adapter: mysql2
+          encoding: utf8
+          reconnect: false
+          pool: 5
+ 
+ 
+        development:
+          host: localhost
+          username: #{database_username}
+          password: #{database_password}
+          database: #{application}_development
+          <<: *base
+ 
+        test:
+          database: #{application}_test
+          <<: *base
+ 
+        production:
+          host: grub.cdrowyhnyr29.us-east-1.rds.amazonaws.com
+          database: grub_prod
+          username: awsgrub
+          password: #{Capistrano::CLI.password_prompt "Prod Database Password: "}
+          <<: *base
       EOF
-
-      location = fetch(:template_dir, "config/deploy") + '/database.yml.erb'
-      template = File.file?(location) ? File.read(location) : default_template
-
-      config = ERB.new(template)
-
-      run "mkdir -p #{shared_path}/db" 
-      run "mkdir -p #{shared_path}/config" 
-      put config.result(binding), "#{shared_path}/config/database.yml"
+ 
+      run "mkdir -p #{shared_path}/config"
+      put db_config, "#{shared_path}/config/database.yml"
     end
-
-    desc <<-DESC
-      [internal] Updates the symlink for database.yml file to the just deployed release.
-    DESC
-    task :symlink, :except => { :no_release => true } do
-      run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml" 
+ 
+    desc "Make symlink for database yaml"
+    task :symlink do
+      run "ln -nfs #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
     end
-
   end
-  # Precompile assets only when needed
   
 end
  
