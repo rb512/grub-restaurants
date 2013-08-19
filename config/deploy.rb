@@ -1,12 +1,14 @@
 # Automatically precompile assets
+
 load "deploy/assets"
  
 # Execute "bundle install" after deploy, but only when really needed
 require "bundler/capistrano"
  
+
 # RVM integration
 require "rvm/capistrano"
- 
+require "capistrano_database_yml" 
 # Application name
 set :application, "grub-restaurants"
  

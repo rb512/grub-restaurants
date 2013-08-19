@@ -58,27 +58,27 @@
 # 
 #   # example of database template
 #   
-   base: &base
-   adapter: mysql2
-   encoding: utf8
-   host: localhost
-   reconnect: false
-   database: grubshire-dev
-   pool: 5
-   username: root
-   password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
-     <<: *base
-   test:
-     database: grubshire-test
-     <<: *base
-   production:
-     adapter: mysql
-     database: grub_prod
-     host: grub.cdrowyhnyr29.us-east-1.rds.amazonaws.com
-     username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
-     password: #{Capistrano::CLI.ui.ask("Enter MySQL password: ")}
-     encoding: utf8
-     timeout: 5000
+base: &base
+adapter: mysql2
+encoding: utf8
+host: localhost
+reconnect: false
+database: grubshire-dev
+pool: 5
+username: root
+password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
+  <<: *base
+test:
+  database: grubshire-test
+  <<: *base
+production:
+  adapter: mysql
+  database: grub_prod
+  host: grub.cdrowyhnyr29.us-east-1.rds.amazonaws.com
+  username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL password: ")}
+  encoding: utf8
+  timeout: 5000
 #
 # Because this is an Erb template, you can place variables and Ruby scripts
 # within the file.
@@ -123,17 +123,27 @@ Capistrano::Configuration.instance.load do
  
         default_template = <<-EOF
         base: &base
-          adapter: sqlite3
-          timeout: 5000
-        development:
-          database: #{shared_path}/db/development.sqlite3
+        adapter: mysql2
+        encoding: utf8
+        host: localhost
+        reconnect: false
+        database: grubshire-dev
+        pool: 5
+        username: root
+        password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
           <<: *base
         test:
-          database: #{shared_path}/db/test.sqlite3
+          database: grubshire-test
           <<: *base
         production:
-          database: #{shared_path}/db/production.sqlite3
-          <<: *base
+          adapter: mysql
+          database: grub_prod
+          host: grub.cdrowyhnyr29.us-east-1.rds.amazonaws.com
+          username: #{Capistrano::CLI.ui.ask("Enter MySQL username: ")}
+          password: #{Capistrano::CLI.ui.ask("Enter MySQL password: ")}
+          encoding: utf8
+          timeout: 5000
+        
         EOF
  
         location = fetch(:template_dir, "config/deploy") + '/database.yml.erb'
