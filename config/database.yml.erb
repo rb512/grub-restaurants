@@ -11,7 +11,7 @@ development:
   database: grubshire-dev
   pool: 5
   username: root
-  password: Oscar2007
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -24,7 +24,7 @@ test:
   database: grubshire-test
   pool: 5
   username: root
-  password: Oscar2007
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}
 
 production:
   adapter: mysql2
@@ -34,4 +34,4 @@ production:
   database: grub_prod
   pool: 5
   username: awsgrub
-  password: Turnipshirt512
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}

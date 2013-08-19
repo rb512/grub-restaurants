@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 # gem 'asset_sync'
 gem 'rails', '3.2.3'
+gem 'rvm-capistrano'
 gem 'twitter-bootstrap-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
