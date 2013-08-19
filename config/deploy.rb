@@ -15,7 +15,7 @@ set :rails_env, :production
  
 # Deploy username and sudo username
 set :user, "ubuntu"
-set :user_rails, "ubuntu"
+set :user_rails, "rails"
  
 # App Domain
 set :domain, "ec2-54-227-105-117.compute-1.amazonaws.com"
@@ -36,9 +36,6 @@ set :branch, "master"
 set :deploy_via, :remote_cache
 set :deploy_to, "/home/ubuntu/grub/#{application}"
  
-set :default_environment, {
-  'PATH' => "/home/ubuntu/.rvm/bin/:home/ubuntu/.rvm/rubies/ruby-1.9.3-p448/bin/:$PATH"
-} 
  
 # We have all components of the app on the same server
 server domain, :app, :web, :db, :primary => true
@@ -71,8 +68,8 @@ namespace :deploy do
   end
  
   task :fix_setup_permissions, :roles => :app, :except => { :no_release => true } do
-    run "chgrp #{user_rails} #{shared_path}/log"
-    run "chgrp #{user_rails} #{shared_path}/pids"
+    run "#{sudo} chgrp #{user_rails} #{shared_path}/log"
+    run "#{sudo} chgrp #{user_rails} #{shared_path}/pids"
   end
  
   task :fix_permissions, :roles => :app, :except => { :no_release => true } do
