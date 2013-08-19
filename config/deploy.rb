@@ -1,5 +1,4 @@
 # Automatically precompile assets
-
 load "deploy/assets"
 
 # Execute "bundle install" after deploy, but only when really needed
@@ -8,21 +7,20 @@ require "bundler/capistrano"
 
 # RVM integration
 require "rvm/capistrano"
+require 'capistrano/ext/multistage'
+
+set :stages, %w(production staging)
+set :default_stage, "staging"
+set :stage_dir, "app/config/deploy"
+
 # Application name
-
-
 set :application, "grub-restaurants"
- 
-# Application environment
-set :rails_env, :production
  
 # Deploy username and sudo username
 set :user, "ubuntu"
 set :user_rails, "rails"
  
-# App Domain
-set :domain, "ec2-54-227-105-117.compute-1.amazonaws.com"
- 
+
 # We don't want to use sudo (root) - for security reasons
 set :use_sudo, false
  
@@ -30,20 +28,13 @@ set :use_sudo, false
 set :scm, :git
  
 # Use github repository
-set :repository, "ssh://git@github.com/rb512/grub-restaurants.git"
- 
-# master is our default git branch
-set :branch, "master"
- 
+set :repository, 'git@github.com:rb512/grub-restaurants.git'
+
+
 # Deploy via github
 set :deploy_via, :remote_cache
 set :deploy_to, "/home/ubuntu/grub/#{application}"
- 
- 
-# We have all components of the app on the same server
-server domain, :app, :web, :db, :primary => true
-ssh_options[:keys] = "/Users/rahulbaxi/Downloads/grubshire.pem"
-ssh_options[:forward_agent] = true
+
 
 # Fix log/ and pids/ permissions
 after "deploy:setup", "deploy:fix_setup_permissions"
@@ -58,13 +49,8 @@ after "deploy:restart", "deploy:cleanup"
  
 #Add database.yml to new release
 before "deploy:assets:precompile", "deploy:db:symlink" 
- 
-#Run db:config after deploy:setup
-after 'deploy:setup', 'deploy:db:configure'
-after 'deploy:db:configure', 'deploy'
 
-#Restart rails after assets:precompile
-after 'deploy:assets:precompile', 'deploy:restart'
+
 
 #Remove db.yml after cleanup
 after 'deploy:cleanup', 'deploy:db:remove_db_yml' 
@@ -100,34 +86,43 @@ namespace :deploy do
  
   namespace :db do
     desc "Create database yaml in shared path"
-    task :configure do
+    task :test_config do
       set :database_username do
         "root"
       end
- 
       set :database_password do
-        Capistrano::CLI.password_prompt "Database Password: "
-       end
- 
+       Capistrano::CLI.password_prompt "Database Password: "
+      end
       db_config = <<-EOF
         base: &base
           adapter: mysql2
           encoding: utf8
           reconnect: false
+          username: #{database_username}
+          password: #{database_password}
           pool: 5
- 
  
         development:
           host: localhost
-          username: #{database_username}
-          password: #{database_password}
           database: #{application}_development
           <<: *base
  
         test:
           database: #{application}_test
           <<: *base
- 
+      EOF
+      
+      run "mkdir -p #{shared_path}/config"
+      put db_config, "#{shared_path}/config/database.yml"
+    end
+    
+    task :configure do
+      db_config = <<-EOF
+        base: &base
+          adapter: mysql2
+          encoding: utf8
+          reconnect: false
+          pool: 5
         production:
           host: grub.cdrowyhnyr29.us-east-1.rds.amazonaws.com
           database: grub_prod
