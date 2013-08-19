@@ -1,24 +1,95 @@
-set :stages %w(production staging)
-set :default_stage, "staging"
-require 'capistrano/ext/multistage'
-
+# Automatically precompile assets
+load "deploy/assets"
+ 
+# Execute "bundle install" after deploy, but only when really needed
+require "bundler/capistrano"
+ 
+# RVM integration
+require "rvm/capistrano"
+ 
+# Application name
 set :application, "grub-restaurants"
-set :repository, "git@github.com:rb512/grub-restaurants.git"
+ 
+# Application environment
+set :rails_env, :production
+ 
+# Deploy username and sudo username
+set :user, "ubuntu"
+set :user_rails, "ubuntu"
+ 
+# App Domain
+set :domain, "ec2-54-227-105-117.compute-1.amazonaws.com"
+ 
+# We don't want to use sudo (root) - for security reasons
+set :use_sudo, false
+ 
+# git is our SCM
 set :scm, :git
+ 
+# Use github repository
+set :repository, "ssh://git@github.com/rb512/grub-restaurants.git"
+ 
+# master is our default git branch
+set :branch, "master"
+ 
+# Deploy via github
+set :deploy_via, :remote_cache
+set :deploy_to, "/home/ubuntu/grub/#{application}"
+ 
+set :default_environment, {
+  'PATH' => "/home/ubuntu/.rvm/bin/:home/ubuntu/.rvm/rubies/ruby-1.9.3-p448/bin/:$PATH"
+} 
+ 
+# We have all components of the app on the same server
+server domain, :app, :web, :db, :primary => true
+ssh_options[:keys] = "/Users/rahulbaxi/Downloads/grubshire.pem"
+ssh_options[:forward_agent] = true
 
-set :deploy_to, "/home/ubuntu/grub"
-
-desc "check production task"
-task :check_production do 
-
-	if stage.to_s == "production"
-		puts "\n Are you sure you want to deploy to production?"
-		puts "\n Enter the password to continue\n"
-		password = STDIN.gets[0..7] rescue nil
-		if password != 'Oscar2007'
-			puts "\n ~~~ Wrong Password ~~"
-			exit
-		end
-	end
+# Fix log/ and pids/ permissions
+after "deploy:setup", "deploy:fix_setup_permissions"
+ 
+# Fix permissions
+before "deploy:start", "deploy:fix_permissions"
+after "deploy:restart", "deploy:fix_permissions"
+after "assets:precompile", "deploy:fix_permissions"
+ 
+# Clean-up old releases
+after "deploy:restart", "deploy:cleanup"
+ 
+namespace :deploy do
+  task :start, :roles => :app, :except => { :no_release => true } do
+    # Start nginx server using sudo (rails)
+    run " sudo /etc/init.d/nginx start"
+  end
+ 
+  task :stop, :roles => :app, :except => { :no_release => true } do
+    run "sudo /etc/init.d/nginx stop"
+  end
+ 
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "sudo /etc/init.d/nginx restart"
+  end
+ 
+  task :fix_setup_permissions, :roles => :app, :except => { :no_release => true } do
+    run "chgrp #{user_rails} #{shared_path}/log"
+    run "chgrp #{user_rails} #{shared_path}/pids"
+  end
+ 
+  task :fix_permissions, :roles => :app, :except => { :no_release => true } do
+    # To prevent access errors while moving/deleting
+    run "#{sudo} chmod 775 #{current_path}/log"
+    run "#{sudo} find #{current_path}/log/ -type f -exec chmod 664 {} \\;"
+    run "#{sudo} find #{current_path}/log/ -exec chown #{user}:#{user_rails} {} \\;"
+    run "#{sudo} find #{current_path}/tmp/ -type f -exec chmod 664 {} \\;"
+    run "#{sudo} find #{current_path}/tmp/ -type d -exec chmod 775 {} \\;"
+    run "#{sudo} find #{current_path}/tmp/ -exec chown #{user}:#{user_rails} {} \\;"
+  end
+ 
+  # Precompile assets only when needed
+  
 end
-
+ 
+# Helper function
+def remote_file_exists?(full_path)
+  'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
+end
