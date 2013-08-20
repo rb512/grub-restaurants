@@ -38,4 +38,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
        "#{Rails.root}/tmp/uploads"
       end
   
+      def default_url
+        ActionController::Base.helpers.asset_path("fallback/" + [version_name, "waiter.jpg"].compact.join('_'))
+      end
 end

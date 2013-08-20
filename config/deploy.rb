@@ -50,11 +50,6 @@ after "deploy:restart", "deploy:cleanup"
 #Add database.yml to new release
 before "deploy:assets:precompile", "deploy:db:symlink" 
 
-
-
-#Remove db.yml after cleanup
-after 'deploy:cleanup', 'deploy:db:remove_db_yml' 
-
 namespace :deploy do
   task :start, :roles => :app, :except => { :no_release => true } do
     # Start nginx server using sudo (rails)
