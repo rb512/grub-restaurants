@@ -23,6 +23,10 @@ GrubshireOnsite::Application.routes.draw do
     end
   end
   
+  get '/mu-f51c7a64-33b63f7b-27d893b4-b42d0216' do
+    '42'
+  end
+  
   root :to => 'menus#index'
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   match 'my_account' => 'dashboard#my_account', :as => 'my_account'
