@@ -70,12 +70,8 @@ class Api::V1::GrubClientController < ApplicationController
    
   def submit_order
     temp_order = params["order"].as_json
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ RECEIVED ORDER : #{params['order']}"
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FORMATTED JSON : #{temp_order}" 
     ordah = temp_order.gsub(':','=>')
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ converted ordah : #{ordah}" 
     orduh = eval(ordah)
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ eval orduh : #{orduh}" 
     serial_number = orduh["serial_number"]
     tablet = current_owner.tablets.where(:serial_no => serial_number).first
     server = current_owner.employees.where(:name => orduh["server_name"]).first
@@ -86,7 +82,6 @@ class Api::V1::GrubClientController < ApplicationController
       order = restaurant.orders.new(:total => orduh["total"], :server_id => server.id, :tablet_id =>tablet.id)
       order_items = orduh["order_items"]
       order_items.each do |order_item|
-        puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#{order_item}"
         menu_item = MenuItem.find_by_name(order_item["name"])
         order.order_items.build(:name => order_item["name"], :quantity => order_item["quantity"], :menu_item_id => menu_item.id)
       end
