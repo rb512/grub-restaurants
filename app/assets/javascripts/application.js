@@ -15,6 +15,7 @@
 //= require twitter/bootstrap
 //= require cocoon
 //= require dataTables/jquery.dataTables
+//= require dataTable.bootstrap
 //= require bootstrap-tabs
 //= require_tree .
 $(document).ready(function() {
