@@ -15,7 +15,7 @@ class MenusController < ApplicationController
   # GET /menus/1.json
   def show
     @menu = current_owner.menus.find(params[:id])
-    @menu_items = @menu.menu_items.paginate(:per_page => 5, :page => params[:page])
+    @menu_items = @menu.menu_items
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => {:menu => @menu, :menu_items => @menu_items} }

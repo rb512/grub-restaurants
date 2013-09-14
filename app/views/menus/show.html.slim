@@ -1,24 +1,27 @@
 h3 Menu Items
-
-table class="table table-striped"
-  tr
-   th 
-   th Item Name
-   th Item Description
-   th Item Price
-   th Category	
-   th Actions
-   th
-  -@menu_items.each do |item|
+p
+table id='menu-items' class="table table-bordered table-condensed"
+  thead
     tr
-	  td= image_tag item.item_asset.url(:small) || "no_image.png"
-      td= item.name
-      td= item.description
-      td= item.price
-	  td= item.category
-	  td= link_to '', edit_menu_menu_item_path(item), :class => 'icon-pencil' 
-	  td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
-  =will_paginate @menu_items, :renderer => SearchPagination::LinkRenderer
+     th 
+     th Item Name
+     th Item Description
+	 th Item Price
+     th Category	
+     th Actions
+     th
+  tbody
+    -@menu_items.each do |item|
+      tr
+	    td= image_tag item.item_asset.url(:small) 
+        td= item.name
+        td= item.description
+        td= item.price
+	    td= item.category
+	    td= link_to '', edit_menu_menu_item_path(item), :class => 'icon-pencil' 
+    	td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'icon-remove'
+
+br
 p
  = link_to 'Edit', edit_menu_path(@menu)
  = ' | '
