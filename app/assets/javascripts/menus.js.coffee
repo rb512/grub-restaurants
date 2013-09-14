@@ -1,4 +1,4 @@
 jQuery ->
 	$('#menu-items').dataTable()
-		sPaginationType: "full_numbers"
+		sPaginationType: "bootstrap"
 		bJQueryUI: true
