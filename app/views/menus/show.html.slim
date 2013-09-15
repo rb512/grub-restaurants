@@ -15,10 +15,8 @@ table id='menu-items' class="table table-bordered table-condensed"
         td= item.description
         td= item.price
 	    td= item.category
-	    td
-		  = link_to '', edit_menu_menu_item_path(item), :class => 'btn btn-primary icon-pencil' 
-		  = " 		"
-    	  = link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger icon-remove'
+	    td= link_to '', edit_menu_menu_item_path(item), :class => 'btn btn-primary icon-pencil'
+		td= link_to '', menu_menu_item_path(item.id), :confirm => 'Are you sure?', :method => :delete, :class => 'btn btn-danger icon-remove'
 
 br
 br
