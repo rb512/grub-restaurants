@@ -1,4 +1,7 @@
 jQuery ->
+	$.fn.dataTableExt.oPagination.iFullNumbersShowPages = 3;
 	$('#menu-items').dataTable()
-		sPaginationType: "four_button"
+		bPagination: true
+		sPaginationType: "bootstrap"
 		bJQueryUI: true
+		bScrollCollapse: true
