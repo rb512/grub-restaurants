@@ -1,50 +1,55 @@
-<p id="notice"><%= notice %></p>
+<h3>Restaurant</h3>
+<div class="well">
+<table class="table">
+	<thead>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Zip</th>
+    <th>Actions</th>
 
-<p>
-  <b>Name:</b>
-  <%= @restaurant.name %>
-</p>
-
-<p>
-  <b>Address:</b>
-  <%= @restaurant.address %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @restaurant.city %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @restaurant.state %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%= @restaurant.country %>
-</p>
-
-<p>
-  <b>Phone:</b>
-  <%= @restaurant.phone %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @restaurant.email %>
-</p>
-
-<p>
-  <b>Zip:</b>
-  <%= @restaurant.zip %>
-</p>
-
-<p>
-  <b>Menu:</b>
-  <%= @menu_name %>
-</p>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><%= @restaurant.name%></td>
+    <td><%= @restaurant.city %></td>
+    <td><%= @restaurant.state %></td>
+    <td><%= @restaurant.phone %></td>
+    <td><%= @restaurant.email %></td>
+    <td><%= @restaurant.zip %></td>
+    <td>
+    <%= link_to '', edit_restaurant_path(@restaurant), :class => 'icon-pencil' %>
+    <%= link_to '', @restaurant, :class =>"icon-remove", confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+</tbody>
+</table>
+</div>
 
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to 'Back', restaurants_path %>
+<h3>Stations</h3>
+<%if !@restaurant.stations.nil?%>
+<div class="well">
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Menu</th>
+			<th>Printer IP</th>
+			<th>
+		</tr>
+	</thead>
+	<%@restaurant.stations.each do |station|%>
+	<tbody>
+		<tr>
+			<td><%=station.name%></td>
+			<td><%=station.get_menu()%></td>
+			<td><%=station.printer_ip%></td>
+	</tbody>
+	<%end%>
+</table>
+<%end%>
+</div>

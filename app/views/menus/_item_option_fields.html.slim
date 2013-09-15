@@ -1,0 +1,11 @@
+.nested-fields
+  table
+    tr
+      td
+        = f.input :size, :wrapper => :inline, :label => false, :hint => 'Size' do
+          = f.input_field :size, :hint => 'Size'
+      td
+        = f.input :price, :wrapper => :inline, :label => false, :hint => 'Price' do
+          = f.input_field :price, :hint => 'Price'
+      td
+        = link_to_remove_association "remove item", f, :class => "btn btn-mini btn-danger"

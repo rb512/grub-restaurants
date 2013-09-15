@@ -3,8 +3,9 @@ class Restaurant < ActiveRecord::Base
   has_many :tablets
   has_many :employees
   has_many :orders
-  attr_accessible :address, :city, :country, :email, :menu_id, :name, :owner_id, :phone, :state, :zip
-  
+  has_many :stations
+  attr_accessible :address, :city, :country, :email, :menu_id, :name, :owner_id, :phone, :state, :zip, :stations_attributes
+  accepts_nested_attributes_for :stations
   validates_presence_of :address, :city, :country, :email, :name, :owner_id, :phone, :state
   validates :zip, :presence => true, :numericality => {:only_integer => true}
   

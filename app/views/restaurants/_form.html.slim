@@ -1,0 +1,18 @@
+= simple_form_for @restaurant, :wrapper => 'inline' do |f|
+  = f.input :name 
+  = f.input :address 
+  = f.input :city 
+  = f.input :state
+  = f.input :country
+  = f.input :phone
+  = f.input :email
+  = f.input :zip
+  = f.label "Menu", :class => 'control-label'
+  =f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'}
+
+  h3 Station
+  = render "stations_step", :f => f
+  
+  br
+  .actions
+  = f.button :submit, "Update", :disable_with => 'Please wait ...'

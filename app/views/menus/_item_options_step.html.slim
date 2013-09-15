@@ -1,0 +1,5 @@
+= f.simple_fields_for :item_options do |item_option|
+  = render 'item_option_fields', :f => item_option
+.links
+  = link_to_add_association 'Add Option', f, :item_options, 
+ :render_options => { :wrapper => 'inline' }, :class => 'btn btn-primary'

@@ -1,0 +1,5 @@
+= f.simple_fields_for :stations do |station|
+  = render 'station_fields', :f => station
+.links
+  = link_to_add_association 'Add Station', f, :stations, 
+ :render_options => { :wrapper => 'inline' }, :class => 'btn btn-primary'

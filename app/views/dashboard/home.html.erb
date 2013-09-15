@@ -1,6 +1,20 @@
-<h1>Total Orders : <%=@order_count%></h1>					
-<br />
-<h1>Total Sales : $ <%=@order_sales%></h1>
+<div class="span3">
+<div class="well">
+<h3>Total Orders : <%=@order_count%></h3>					
+</div>
+</div>
+
+<div class="span3">
+<div class="well">
+	<h3>Total Sales : $ <%=@order_sales%></h3>
+</div>
+</div>
+
+<div class="span3">
+<div class="well">	
+	<h3>Servers </h3>
 <%@servers.each do |server|%>
-	<%=server.name%><br/>
+	<h4><%=server.name%></h4><br/>
 <%end%>
+</div>
+</div>

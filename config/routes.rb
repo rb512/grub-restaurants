@@ -27,6 +27,7 @@ GrubshireOnsite::Application.routes.draw do
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   match 'my_account' => 'dashboard#my_account', :as => 'my_account'
   match 'daily_special' => 'menus#daily_special', :as => 'daily_special'
+  match 'dashboard' => 'dashboard#home'
   # match 'my_menu_item/:id' => 'menus#new_menu_item', :as => 'my_menu_item'
 #   match 'create_menu_item' => 'menus#create_menu_item', :as => 'create_menu_item'
 #   
