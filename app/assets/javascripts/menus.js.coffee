@@ -1,3 +1,4 @@
 jQuery ->
 	$('#menu-items').dataTable()
-		sPaginationType: "bootstrap"
+		sPaginationType: "four_button"
+		bJQueryUI: true

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/rb512/jquery-datatables-rails.git
-  revision: 0ca1acf2ccae2a6dc34a7e45de4f94c1aaa8155d
+  revision: 092eafbd24a3cdf1a6af50c879ed7b60bd15634c
   specs:
     jquery-datatables-rails (1.11.2)
       jquery-rails
