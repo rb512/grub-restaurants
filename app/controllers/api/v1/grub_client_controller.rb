@@ -79,12 +79,15 @@ class Api::V1::GrubClientController < ApplicationController
       render :status => 400, :json => {:message => "Access Denied!"}
     else
       restaurant = server.restaurant
+      order_total = 0.0
       order = restaurant.orders.new(:total => orduh["total"], :server_id => server.id, :tablet_id =>tablet.id)
       order_items = orduh["order_items"]
       order_items.each do |order_item|
         menu_item = MenuItem.find_by_name(order_item["name"])
         order.order_items.build(:name => order_item["name"], :quantity => order_item["quantity"], :menu_item_id => menu_item.id)
+        order_total += menu_item.price*order_item["quantity"]
       end
+      order.total = order_total
       if order.save
         render :status => 200, :json => {:message => 'Order Submitted Successfully!'}
       else
