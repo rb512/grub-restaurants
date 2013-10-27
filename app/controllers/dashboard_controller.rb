@@ -26,14 +26,14 @@ class DashboardController < ApplicationController
     today = Time.now
   
     restaurant = current_owner.restaurants.first
-    order_chart = restaurant.orders.where(:created_at => (today.beginning_of_month..today)).reverse
+    order_chart = restaurant.orders.sum(:total, :group => "DATE(created_at)")
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'Date' )
     data_table.new_column('number', 'Sales')
 
     # Add Rows and Values
     order_chart.each do |order|
-      data_table.add_row([(order.created_at).strftime("%m/%d"), order.total])
+      data_table.add_row([(order[0]).strftime("%m/%d"), order[1].round(5)])
     end
 
     option = { width: 1000, height: 340, title: 'Sales this month' }
