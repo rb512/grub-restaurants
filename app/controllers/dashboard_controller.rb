@@ -33,7 +33,7 @@ class DashboardController < ApplicationController
 
     # Add Rows and Values
     order_chart.each do |order|
-      data_table.add_row([(order.created_at.to_date).to_s, order.total])
+      data_table.add_row([(order.created_at).strftime("%m/%d"), order.total])
     end
 
     option = { width: 700, height: 340, title: 'Sales this month' }
