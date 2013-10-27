@@ -1,20 +1,54 @@
-<div class="span3">
-<div class="well">
-<h3>Total Orders : <%=@order_count%></h3>					
+<p>
+<div id="chart">
+	<%=render_chart(@chart,'chart')%>
 </div>
+</p>
+
+<div class="span3">
+	<div class="well">
+		<h3>Total Orders : <%=@order_count%></h3><br/>	
+		<h3>Total Sales : $ <%=@order_sales.round(5)%></h3>				
+	</div>
 </div>
 
 <div class="span3">
-<div class="well">
-	<h3>Total Sales : $ <%=@order_sales%></h3>
-</div>
+	<div class="well">
+		<h3>Restaurant Performance</h3><br/>	
+		<table class='table'>
+			<tr>
+				<th>Restaurant</th>
+				<th>Sales</th>
+				<th>Orders</th>
+			</tr>
+			<%@restaurants.each do |restaurant|%>
+				<tr>
+					<td><%=restaurant.name%></td>
+					<td><%=restaurant.orders.sum(:total).round(5)%></td>
+					<td><%=restaurant.orders.count%></td>
+				</tr>
+			<%end%>
+		</table>
+	</div>
 </div>
 
-<div class="span3">
-<div class="well">	
-	<h3>Servers </h3>
-<%@servers.each do |server|%>
-	<h4><%=server.name%></h4><br/>
-<%end%>
-</div>
+<div class="span4">
+	<div class="well">	
+		<h3>Server Performance</h3><br/>
+		<table class="table">
+			<tr>
+				<th>Servers</th>
+				<th>Restaurant</th>
+				<th>Orders Procesed</th>
+				<th>Sales</th>
+			</tr>
+			<%@servers.each do |server|%>
+			<tr>
+				<td><%=server.name%></td>
+				<td><%=server.restaurant.name%></td>
+				<td><%=get_orders_by_server(server.id)%></td>
+				<td><%=get_sales_by_server(server.id)%></td>
+			</tr>
+			<%end%>
+		</table>
+	</div>
 </div>

@@ -23,7 +23,7 @@ GrubshireOnsite::Application.routes.draw do
     end
   end
   
-  root :to => 'menus#index'
+  root :to => 'dashboard#home'
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
   match 'my_account' => 'dashboard#my_account', :as => 'my_account'
   match 'daily_special' => 'menus#daily_special', :as => 'daily_special'
