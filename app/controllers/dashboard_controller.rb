@@ -26,10 +26,10 @@ class DashboardController < ApplicationController
     today = Time.now
   
     restaurant = current_owner.restaurants.first
-    order_chart = restaurant.orders.sum(:total, :group => "DATE(created_at)")
+    order_chart = restaurant.orders.sum(:total, :group => "DATE(created_at)", :conditions => {:created_at => today.beginning_of_month..today})
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'Date' )
-    data_table.new_column('number', 'Sales')
+    data_table.new_column('number', 'Total Sales')
 
     # Add Rows and Values
     order_chart.each do |order|
