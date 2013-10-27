@@ -36,7 +36,7 @@ class DashboardController < ApplicationController
       data_table.add_row([(order.created_at).strftime("%m/%d"), order.total])
     end
 
-    option = { width: 700, height: 340, title: 'Sales this month' }
+    option = { width: 1000, height: 340, title: 'Sales this month' }
     @chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, option)
   end
 end
