@@ -25,9 +25,8 @@ class DashboardController < ApplicationController
     end
     today = Time.now
   
-    restaurant = current_owner.restaurants.find(11)
+    restaurant = current_owner.restaurants.first
     order_chart = restaurant.orders.where(:created_at => (today.beginning_of_month..today)).reverse
-    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ order count: #{order_chart.count}"
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('string', 'Date' )
     data_table.new_column('number', 'Sales')
