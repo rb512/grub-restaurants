@@ -1,18 +1,27 @@
 = simple_form_for @restaurant, :wrapper => 'inline' do |f|
-  = f.input :name 
-  = f.input :address 
-  = f.input :city 
-  = f.input :state
-  = f.input :country
-  = f.input :phone
-  = f.input :email
-  = f.input :zip
-  = f.label "Menu", :class => 'control-label'
-  =f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'}
-
-  h3 Station
-  = render "stations_step", :f => f
+  .form-group
+    label.form-label Name
+    span.help e.g. "Main Menu or Drinks Menu"
+    .controls
+    = f.text_field :name
+  .form-group
+    label.form-label Location
+    .controls
+    = f.text_field :location, onFocus: "geolocate()", placeholder: "Start typing your location.."  
+  .form-group
+    label.form-label Phone
+    .controls
+    = f.text_field :phone
+  .form-group
+    label.form-label Email
+    .controls
+    = f.text_field :email
+  .form-group
+    label.form-label Menu
+    span.help e.g. "Main Menu or Drinks Menu"
+    .controls
+    = f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'}
+	
   
-  br
-  .actions
-  = f.button :submit, "Update", :disable_with => 'Please wait ...'
+	.actions
+  = f.button :submit, "Update", class: "btn btn-primary", :disable_with => 'Please wait ...'

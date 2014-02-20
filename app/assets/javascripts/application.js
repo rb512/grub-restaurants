@@ -10,43 +10,45 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+//= require ./plugins/core/jquery-1.8.3.min
 //= require jquery_ujs
-//= require twitter/bootstrap
+//= require core-js
+//= require page-js
 //= require cocoon
-//= require dataTables/jquery.dataTables
-//= require dataTable.bootstrap
-//= require bootstrap-tabs
-//= require_tree .
-$(document).ready(function() {
-    $("#category a.add_fields").
-      data("association-insertion-position", 'before').
-      data("association-insertion-node", 'this');
 
-    $('#category').bind('cocoon:after-insert',
-         function(e, tag) {
-             $(".category-fields a.add_fields").
-                 data("association-insertion-position", 'before').
-                 data("association-insertion-node", 'this');
-             $('.category-fields').bind('cocoon:after-insert',
-                  function() {
-                    $(this).children("#category_from_list").remove();
-                    $(this).children("a.add_fields").hide();
-                  });
-         });
+//= require ./plugins/core
+//= require ./plugins/demo
+//= require ./plugins/dashboard_v2
 
-    $('#menu_items').bind('cocoon:before-insert', function(e,task_to_be_added) {
-        task_to_be_added.fadeIn('slow');
-    });
-
-    $('#menu_items').bind('cocoon:after-insert', function(e, added_task) {
-        //added_task.css("background","red");
-    });
-
-    $('#menu_items').bind('cocoon:before-remove', function(e, task) {
-        $(this).data('remove-timeout', 1000);
-        task.fadeOut('slow');
-    })
-
-    $('body').tabs();
-});
+// $(document).ready(function() {
+//     $("#category a.add_fields").
+//       data("association-insertion-position", 'before').
+//       data("association-insertion-node", 'this');
+// 
+//     $('#category').bind('cocoon:after-insert',
+//          function(e, tag) {
+//              $(".category-fields a.add_fields").
+//                  data("association-insertion-position", 'before').
+//                  data("association-insertion-node", 'this');
+//              $('.category-fields').bind('cocoon:after-insert',
+//                   function() {
+//                     $(this).children("#category_from_list").remove();
+//                     $(this).children("a.add_fields").hide();
+//                   });
+//          });
+// 
+//     $('#menu_items').bind('cocoon:before-insert', function(e,task_to_be_added) {
+//         task_to_be_added.fadeIn('slow');
+//     });
+// 
+//     $('#menu_items').bind('cocoon:after-insert', function(e, added_task) {
+//         //added_task.css("background","red");
+//     });
+// 
+//     $('#menu_items').bind('cocoon:before-remove', function(e, task) {
+//         $(this).data('remove-timeout', 1000);
+//         task.fadeOut('slow');
+//     })
+// 
+//     $('body').tabs();
+// });

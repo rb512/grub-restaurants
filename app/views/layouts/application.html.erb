@@ -1,59 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grubshire Restaurants</title>
-  <script src='https://www.google.com/jsapi'></script>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta charset="utf-8" />
+<title>GrubShire</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta content="" name="description" />
+<meta content="" name="author" />
+<%=stylesheet_link_tag :application, media: :all%>
+<!-- END CSS TEMPLATE -->
 </head>
-<body>
-	<div class="navbar navbar-fixed-top">
-	    <div class="navbar-inner">
-	      <div class="container">
-	        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	          <span class="icon-bar"></span>
-	        </a>
-			<%=link_to "GrubShire", root_path, :class => "brand"%>
-	        <div class="nav-collapse">
-	        <%if owner_signed_in?%>	
-			  <ul class="nav">
-	            <li><%= link_to "Menu", menus_path %></li>
-	            <li><%= link_to "Restaurants", restaurants_path %></li>
-				<li><%= link_to "Tablets", tablets_path%>
-	            <li><%= link_to "Employees", employees_path %></li>
-	          </ul>
-			  <form class="navbar-search pull-right" action="">
-			     <input type="text" class="search-query span2" placeholder="Search">
-			   </form>
-			  <ul class="nav pull-right">
-			    <li class="dropdown">
-			      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=@current_owner.email%> <b class="caret"></b></a>
-			      <ul class="dropdown-menu">
-			        <li><%=link_to "Sign Out", destroy_owner_session_path, :method => 'delete'%></li>
-			        <li><%=link_to "My Account", my_account_path%></li>
-			      </ul>
-			    </li>
-			  </ul>
-			  <%end%>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
+	<%if owner_signed_in?%>
+		<%=render partial: "layouts/signed_in"%>
+	<%else%>
+  	<%=render partial: "layouts/not_signed"%>
+	<%end%>
 
-	  <div class="container">
-	    <div class="row">
-			<%if notice%>
-				<%=render "layouts/notice", :notice => (notice||alert), :id =>"notice"%>
-			<%elsif alert%>
-				<%=render "layouts/notice", :notice => (notice||alert), :id =>"error"%>
-			<%end%>
-	      <div class="span12"><%= yield %></div>
-	     
-	    </div>
-	  </div>
-  <%= javascript_include_tag :application %>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<%=javascript_include_tag "gmaps"%>
+<%=javascript_include_tag :application%>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $(".live-tile,.flip-list").liveTile();
+        });
+</script>
+
 </body>
 </html>

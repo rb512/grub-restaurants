@@ -1,6 +1,42 @@
+<div class="clearfix"></div>
+<div class="content">
+    <div class="page-title">	<i class="fa fa-key"></i>
+        	<h3>API Key </h3>	
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-title no-border">
+                    <h4>  <span class="semi-bold"></span></h4>
+                    <div class="tools">	<a href="javascript:;" class="collapse"></a>
+			<a href="javascript:;" class="reload"></a>
+                    </div>
+                </div>
+                <div class="grid-body no-border">
+                        <table class="table table-bordered no-more-tables">
+                            <thead>
+	<tr>
+    <th>Authentication Key</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><%= @auth_token %></td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="content">
 <p>
   <b>Auth Token:</b>
   <%= @auth_token %>
 </p>
 
 <%= link_to 'Back', root_path %>
+
+</div>

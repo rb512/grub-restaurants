@@ -4,10 +4,9 @@ class Restaurant < ActiveRecord::Base
   has_many :employees
   has_many :orders
   has_many :stations
-  attr_accessible :address, :city, :country, :email, :menu_id, :name, :owner_id, :phone, :state, :zip, :stations_attributes
-  accepts_nested_attributes_for :stations
-  validates_presence_of :address, :city, :country, :email, :name, :owner_id, :phone, :state
-  validates :zip, :presence => true, :numericality => {:only_integer => true}
+  attr_accessible :location,:email, :menu_id, :name, :owner_id, :phone, :stations_attributes
+  # accepts_nested_attributes_for :stations
+  validates_presence_of :location, :email, :name, :owner_id, :phone
   
   def get_menus()
     menus = []

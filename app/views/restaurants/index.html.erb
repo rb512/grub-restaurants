@@ -1,21 +1,30 @@
-<h1>Listing Restaurants</h1>
+<div class="clearfix"></div>
+<div class="content">
+    <div class="page-title">	<i class="fa fa-th"></i>
+        	<h3>Restaurants </h3>	
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid simple ">
+                <div class="grid-title no-border">
+                    <h4>  <span class="semi-bold"></span></h4>
+                    <div class="tools">	<a href="javascript:;" class="collapse"></a>
+			<a href="javascript:;" class="reload"></a>
+                    </div>
+                </div>
+                <div class="grid-body no-border">
+       
+									<%if @restaurants.empty?%>
+										<h2> No Restaurants Added Yet!</h2>
 
-<%if @restaurants.empty?%>
-	<h2> No Restaurants Added Yet!</h2>
-
-<%else%>
-<div class="well">
-<table class="table">
-	<thead>
-  <tr>
-    <th>Name</th>
-    <th>Address</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Country</th>
+									<%else%>               
+                        <table class="table table-bordered no-more-tables">
+                            <thead>
+	<tr>
+		<th>Name</th>
+    <th>Location</th>
     <th>Phone</th>
     <th>Email</th>
-    <th>Zip</th>
     <th>Actions</th>
 
   </tr>
@@ -24,23 +33,20 @@
 <tbody>
   <tr>
     <td><%= link_to restaurant.name, restaurant_path(restaurant) %></td>
-    <td><%= restaurant.address %></td>
-    <td><%= restaurant.city %></td>
-    <td><%= restaurant.state %></td>
-    <td><%= restaurant.country %></td>
+    <td><%= restaurant.location %></td>
     <td><%= restaurant.phone %></td>
     <td><%= restaurant.email %></td>
-    <td><%= restaurant.zip %></td>
     <td>
-    <%= link_to '', edit_restaurant_path(restaurant), :class => 'icon-pencil' %>
-    <%= link_to '', restaurant, :class =>"icon-remove", confirm: 'Are you sure?', method: :delete %></td>
+    <%= link_to '', edit_restaurant_path(restaurant), :class => 'fa fa-pencil' %>
+    <%= link_to '', restaurant, :class =>"fa fa-times", confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 </tbody>
 <% end %>
 </table>
-</div>
-<br />
 <%end%>
-
-<%= link_to 'Add New Restaurant', new_restaurant_path, :class => 'btn btn-primary'%>
+</div>
+</div>
+</div>
+</div>
+</div>
 
