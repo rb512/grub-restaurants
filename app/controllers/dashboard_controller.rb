@@ -17,6 +17,10 @@ class DashboardController < ApplicationController
     @servers = {}
     @order_sales = 0.0 
     @restaurants = current_owner.restaurants
+    @trending_item = "Beer"
+    @most_ordered = "Guiness"
+    @most_ordered_sales = 770.34
+    @trending_item_sales = 1233.55
       # current_owner.restaurants.each do |restaurant| 
 #         @order_count += restaurant.orders.count 
 #         @order_sales += restaurant.orders.sum(:total)

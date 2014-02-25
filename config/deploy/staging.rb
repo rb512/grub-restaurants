@@ -10,5 +10,5 @@ set :domain, "ec2-54-227-154-11.compute-1.amazonaws.com"
 
 
 server domain, :app, :web, :db, :primary => true
-ssh_options[:keys] = "/Users/rahulbaxi/Downloads/grub-staging.pem"
+ssh_options[:keys] = "/Users/rahulbaxi/Dropbox/all_stuff/GrubShire/grub-staging.pem"
 ssh_options[:forward_agent] = true
