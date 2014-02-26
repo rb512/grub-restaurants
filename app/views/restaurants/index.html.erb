@@ -16,7 +16,7 @@
        
 									<%if @restaurants.empty?%>
 										<h2> No Restaurants Added Yet!</h2>
-
+										<%=link_to "Add New Restaurant", :new_restaurant, class: "btn btn-primary"%>
 									<%else%>               
                         <table class="table table-bordered no-more-tables">
                             <thead>
