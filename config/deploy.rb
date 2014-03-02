@@ -102,8 +102,8 @@ namespace :deploy do
           database: #{application}_development
           <<: *base
  
-        test:
-          database: #{application}_test
+        production:
+          database: #{application}_prod
           <<: *base
       EOF
       
