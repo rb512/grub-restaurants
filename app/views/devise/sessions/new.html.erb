@@ -1,0 +1,32 @@
+
+<div class="container">
+  <div class="row login-container animated fadeInUp">  
+        <div class="col-md-7 col-md-offset-2 tiles white no-padding">
+		 <div class="p-t-30 p-l-40 p-b-20 xs-p-t-10 xs-p-l-10 xs-p-b-10"> 
+          <h2 class="normal">Sign In</h2>
+        </div>
+		<div class="tiles grey p-t-20 p-b-20 text-black">
+				<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), class: "animated fadeIn") do |f| %>
+                    <div class="row form-row m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+						 			   <div class="form-inputs">
+											 <div class="col-md-6 col-sm-6 ">
+						 			     	<%= f.input :email, :required => false, :autofocus => true, class: "form-control", placeholder: "email" %>
+						 			     	<%= f.input :password, :required => false , class: "form-control", placeholder: "password"%>
+											 </div>
+                    </div>
+									</div>
+				<div class="row p-t-10 m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+				  <div class="control-group  col-md-10">
+						
+						<%= f.button :submit, "Sign in", class: "btn btn-primary btn-cons" %>
+				  </div>
+				  </div>
+					<%end%>
+					<div class="row p-t-10 m-l-20 m-r-20 xs-m-l-10 xs-m-r-10">
+								<%=render partial: "devise/shared/links"%>
+							</div>
+		</div>   
+      </div>   
+  </div>
+</div>
+

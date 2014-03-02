@@ -1,13 +1,15 @@
 class Api::V1::GrubClientController < ApplicationController
   require 'json'
   skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
-  before_filter :authenticate_owner!
+  before_filter :authenticate_owner_from_token!
   respond_to :json
+  
   
   def register_tablet
     serial_no = params[:serial_number]
     ip_address = params[:ip_address]
     is_server = params[:is_server]
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{@current_owner.email}"
     tablet = current_owner.tablets.where(:serial_no => serial_no).first
     if tablet.nil?
      render :status => 400, :json => {:message => 'This tablet is not registered with your restaurant'}
@@ -47,6 +49,23 @@ class Api::V1::GrubClientController < ApplicationController
       else
         render :status => 200, :json =>{:restaurant_id =>restaurant.id, :menu_items => menu_items, :employees => employees}
       end
+    end
+  end
+  
+  def get_menu_items
+    serial_no = params[:serial_number]
+    tablet = current_owner.tablets.where(:serial_no => serial_no).first
+    if tablet.nil?
+      render :status => 400, :json => {:message => 'This tablet is not registered with your restaurant'}
+    else
+      restaurant = current_owner.restaurants.find(tablet.restaurant_id)
+      menu = current_owner.menus.find(restaurant.menu_id)
+      menu_items = menu.menu_items
+      options =[]
+      menu.menu_items.each {|item| options << item.item_options unless item.item_options.empty?}
+      @options = options.flatten(2)
+      puts "~~~~~~~~~~~~~~~~~~~#{@options}"
+      render :status => 200, :json =>{restaurant_id: restaurant.id, menu_items: menu_items, item_options: @options}
     end
   end
   
@@ -94,8 +113,11 @@ class Api::V1::GrubClientController < ApplicationController
         render :status => 400, :json => {:message => "Access Denied!"}
       end
     end
-    
-    
   end
-   
+  
+  private 
+  def is_authorized?(serial_no)
+    return tablet = current_owner.tablets.where(:serial_no => serial_no).first
+  end
+  
 end

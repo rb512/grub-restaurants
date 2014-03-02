@@ -6,7 +6,8 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :server_id
       t.integer :restaurant_id
       t.float :total
-
+      t.integer :tablet_id
+      t.integer :restaurant_id
       t.timestamps
     end
   end

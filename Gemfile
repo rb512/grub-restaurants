@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # gem 'asset_sync'
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.13'
 gem 'rvm-capistrano'
 gem 'twitter-bootstrap-rails'
 gem "google_visualr", ">= 2.1"
@@ -16,12 +16,13 @@ gem "slim"
 gem "slim-rails", :require => false
 gem 'devise'
 gem 'carrierwave'
-gem 'rmagick'
+gem 'rmagick', '2.13.2'
 gem 'fog'
 gem 'will_paginate','~> 3.0.0'
 gem 'will_paginate-bootstrap'
 gem 'newrelic_rpm'
-ruby '1.9.3'
+ruby '2.1.0'
+gem 'devise_invitable'
 gem 'mysql2', '~> 0.3.10'
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,8 +34,8 @@ group :assets do
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
  # gem 'twitter-bootstrap-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
-
+  gem 'therubyracer', :platform => :ruby
+  gem 'less-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 #group :development do 
@@ -48,7 +49,7 @@ gem 'jquery-rails'
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+#gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'

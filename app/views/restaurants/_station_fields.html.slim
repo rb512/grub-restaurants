@@ -3,13 +3,13 @@
     tr
       td
         = f.input :name, :wrapper => :inline, :label => false, :hint => 'Station Name' do
-          = f.input_field :name, :hint => 'Station Name'
+          = f.input_field :name, :hint => 'Station Name', size: 10
       td
         = f.input :menu, :wrapper => :inline, :label => false, :hint => 'Menu' do
           = f.select :menu_id, @restaurant.get_menus.collect {|menu| [menu.name, menu.id]}, {include_blank: 'None'}
       td
         = f.input :printer_ip, :wrapper => :inline, :label => false, :hint => 'Printer IP' do
-          = f.input_field :printer_ip, :hint => 'Printer IP'	  
+          = f.input_field :printer_ip, :hint => 'Printer IP', size: 10	  
       td
 	  
         = link_to_remove_association "Remove Item", f, :class => "btn btn-mini btn-danger"

@@ -1,0 +1,9 @@
+/*
+ *= require_tree ./plugins/plugins-core
+ *= require_tree ./plugins/core-css
+ *= require ./plugins/style
+ *= require ./plugins/responsive
+ *= require ./plugins/custom-icon-set
+ *= require ./plugins/magic_space
+ *= require ./plugins/tiles_responsive
+*/
