@@ -7,5 +7,4 @@ class ItemOptions < ActiveRecord::Migration
       t.timestamps
     end
   end
-
 end

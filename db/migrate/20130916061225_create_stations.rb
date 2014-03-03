@@ -5,7 +5,6 @@ class CreateStations < ActiveRecord::Migration
       t.string :printer_ip
       t.integer :menu_id
       t.integer :restaurant_id
-
       t.timestamps
     end
   end
