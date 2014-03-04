@@ -29,7 +29,7 @@ gem 'mysql2', '~> 0.3.10'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'turbo-sprockets-rails3'
+#  gem 'turbo-sprockets-rails3'
   gem 'jquery-ui-rails'
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
   gem 'asset_sync'

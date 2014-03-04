@@ -1,0 +1,1 @@
+(function(){jQuery(function(){return $.fn.dataTableExt.oPagination.iFullNumbersShowPages=3,$("#menu-items").dataTable()({bPagination:!0,sPaginationType:"bootstrap",bJQueryUI:!0,bScrollCollapse:!0})})}).call(this);
