@@ -11,5 +11,5 @@ set :domain, "ec2-54-227-105-117.compute-1.amazonaws.com"
  
 # We have all components of the app on the same server
 server domain, :app, :web, :db, :primary => true
-ssh_options[:keys] = "/Users/rahulbaxi/Downloads/grubshire.pem"
+ssh_options[:keys] = "/Users/rahulbaxi/Dropbox/all_stuff/GrubShire/grubshire.pem"
 ssh_options[:forward_agent] = true

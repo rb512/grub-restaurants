@@ -20,6 +20,7 @@ GrubshireOnsite::Application.routes.draw do
       match 'get_server_ip' => 'grub_client#get_server_ip'
       match 'rate_server' => 'grub_client#rate_server'
       match 'submit_order' => 'grub_client#submit_order'
+      match 'order' => 'grub_client#order'
       match 'get_menu_items' => 'grub_client#get_menu_items'
     end
   end
