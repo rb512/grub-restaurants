@@ -21,7 +21,7 @@ class DashboardController < ApplicationController
     @most_ordered = ""
     @most_ordered_sales = ""
     @trending_item_sales = ""
-    if !current_owner.restaurants.nil?
+    if !current_owner.restaurants.empty?
       current_owner.restaurants.each do |restaurant| 
         @order_count += restaurant.orders.count 
         @order_sales += restaurant.orders.sum(:total)
