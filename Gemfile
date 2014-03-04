@@ -32,6 +32,7 @@ group :assets do
   gem 'turbo-sprockets-rails3'
   gem 'jquery-ui-rails'
   gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+  gem 'asset_sync'
  # gem 'twitter-bootstrap-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platform => :ruby
