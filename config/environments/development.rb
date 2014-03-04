@@ -14,10 +14,23 @@ GrubshireOnsite::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  config.action_mailer.default_url_options = { :host => 'restaurants.grubshire.com' }
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.perform_deliveries = true
+  ActionMailer::Base.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :address            => 'smtp.gmail.com',
+    :port               => 25,
+    :domain             => 'grubshire.com',
+    :authentication     => :plain,
+    :user_name          => 'rahul@grubshire.com',
+    :password           => ENV['mail_password'],
+    :enable_starttls_auto => true,
+    :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE
+  }
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
