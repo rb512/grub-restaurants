@@ -30,7 +30,7 @@
 <% @tablets.each do |tablet| %>
 <tbody>
   <tr>
-    <td><%= tablet.restaurant.name %></td>  
+    <td><%= tablet.restaurant.name if tablet.restaurant %></td>  
     <td><%= tablet.ip_address %></td>
     <td><%= tablet.is_server %></td>
     <td><%= tablet.owner.email %></td>
