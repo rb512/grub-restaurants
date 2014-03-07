@@ -10,7 +10,8 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require ./plugins/core/jquery-1.8.3.min
+//=require_self
+//= require jquery
 //= require jquery_ujs
 //= require core-js
 //= require page-js

@@ -34,7 +34,7 @@ ActionMailer::Base.smtp_settings = {
   :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE
 }
   
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = "http://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
