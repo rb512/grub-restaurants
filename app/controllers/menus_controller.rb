@@ -33,11 +33,10 @@ class MenusController < ApplicationController
 
   # GET /menus/1/edit
   def edit
-    session[:menu_update_params] ||= {}
+    session[:menu_params] ||= {}
     @menu = current_owner.menus.find(params[:id])
     @categories = @menu.categories
-    session[:menu_id] = @menu.id
-    session[:menu_step] = @menu.current_step
+    @menu.current_step = session[:menu_step]
   end
 
   # POST /menus
@@ -68,16 +67,30 @@ class MenusController < ApplicationController
   # PUT /menus/1.json
   def update
     @menu = current_owner.menus.find(params[:id])
-    respond_to do |format|
-      if @menu.update_attributes(params[:menu])
-        format.html { redirect_to @menu, notice: 'Menu was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @menu.errors, status: :unprocessable_entity }
-      end
+    session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
+    @categories = @menu.categories
+    @menu.current_step = session[:menu_step]
+    updated = false
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~FIRST CHECK : #{@menu.current_step}"
+    if params[:back_button]
+      @menu.previous_step
+    elsif @menu.last_step?
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~LAST STEP : #{@menu.current_step}"
+      @menu.update_attributes(session[:menu_params])
+      updated = true
+    else
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~BEFORE: NEXT STEP BLOCK #{@menu.current_step}"
+      @menu.next_step
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~AFTER : NEXT STEP BLOCK #{@menu.current_step}"
     end
+    session[:menu_step] = @menu.current_step
     
+    if updated
+      session[:menu_steps]=session[:menu_params] = nil
+      redirect_to @menu, notice: "Menu was successfully updated."
+    else
+      render "edit"
+    end
   end
 
   def destroy_menu_item

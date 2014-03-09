@@ -1,10 +1,22 @@
-= simple_form_for @menu, :html => {:multipart => true}, :wrapper => 'inline' do |f|
-  = f.input :name, :hint => 'Just a name for your menu'
-  = f.input :menu_type, :hint => 'Type of menu'
-  = render "#{@menu.current_step}", :f => f
-
-  br
-  .actions
-  = f.button :submit, "Update", :disable_with => 'Please wait ...'
- 
-= link_to 'Back', menus_path
+.content
+	.page-title
+	  i.icon-custom-portlets
+	  h3
+	    | 
+	    span.semi-bold Menus
+	/! BEGIN BASIC FORM ELEMENTS
+	.row
+	  .col-md-12
+	    .grid.simple
+	      .grid-title.no-border
+	        h4
+	          | Edit
+	          span.semi-bold Menu
+	        .tools
+	          a.collapse href="javascript:;"
+	      .grid-body.no-border
+	        br
+	          .row
+	            .col-md-8.col-sm-8.col-xs-8
+							  == render 'form'
+	            = link_to 'Back', menus_path, class: "btn btn-danger btn-cons"
