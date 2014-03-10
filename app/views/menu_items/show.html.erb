@@ -24,6 +24,25 @@
   <dd><%= image_tag @menu_item.item_asset.url(:large)%></dd>
 </dl>
 
+<%if !@menu_item.item_options.empty?%>
+<h2>Options</h2>
+<table class="table table-bordered no-more-tables">
+  <thead>
+	  <tr>
+			<th>Option</th>
+			<th>Price</th>
+		</tr>
+  </thead>
+	<tbody>
+		<%-@menu_item.item_options.each do |option|%>
+		<tr>
+			<td><%=option.size%></td>
+			<td><%=option.price%></td>
+		</tr>
+		<%end%>
+	</tbody>
+</table>
+<%end%>
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               menu_path(@menu_item.menu), :class => 'btn'  %>

@@ -22,9 +22,33 @@ class MenusController < ApplicationController
     end
   end
 
+
+  def new
+    @menu = current_owner.menus.new
+  end
+  
+  def create
+    @menu = current_owner.menus.new(params[:menu])
+    if @menu.save
+      session[:menu_id] = @menu.id
+      redirect_to menu_steps_path
+    else
+      render "new"
+    end
+  end
+  
+  def update
+    @menu = current_owner.menus.find(params[:id])
+    if @menu.update_attributes(params[:menu])
+      redirect_to @menu
+    else
+      render "edit"
+    end
+  end
+  
   # GET /menus/new
   # GET /menus/new.json
-  def new
+  def new_old
     session[:menu_params] ||= {}
     @menu = current_owner.menus.new(session[:menu_params])
     @categories = @menu.categories
@@ -41,7 +65,7 @@ class MenusController < ApplicationController
 
   # POST /menus
   # POST /menus.json
-  def create
+  def create_old
     session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
     @menu = current_owner.menus.new(session[:menu_params])
     @categories = @menu.categories
@@ -65,7 +89,7 @@ class MenusController < ApplicationController
  
   # PUT /menus/1
   # PUT /menus/1.json
-  def update
+  def update_old
     @menu = current_owner.menus.find(params[:id])
     session[:menu_params].deep_merge!(params[:menu]) if params[:menu]
     @categories = @menu.categories

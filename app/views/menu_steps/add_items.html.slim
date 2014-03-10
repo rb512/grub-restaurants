@@ -1,0 +1,32 @@
+.content
+	.page-title
+	  i.icon-custom-portlets
+	  h3
+	    | 
+	    span.semi-bold Menus
+	/! BEGIN BASIC FORM ELEMENTS
+	.row
+	  .col-md-12
+	    .grid.simple
+	      .grid-title.no-border
+	        h4
+	          | Add 
+	          span.semi-bold Menu Items
+	        .tools
+	          a.collapse href="javascript:;"
+	      .grid-body.no-border
+	        br
+	          .row
+	            .col-md-8.col-sm-8.col-xs-8
+							  =simple_form_for @menu do |f|
+									= f.simple_fields_for :menu_items do |menu_item|
+									  = render 'menu_item_fields', :f => menu_item
+									  br
+									.links
+									  br
+									  = link_to_add_association 'Add Item', f, :menu_items, 
+									 :render_options => { :wrapper => 'inline' }, :class => 'btn btn-primary'
+									br	
+									= f.button :submit, "Submit", class: "btn btn-primary"
+								 
+								  

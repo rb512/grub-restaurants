@@ -7,6 +7,8 @@ GrubshireOnsite::Application.routes.draw do
   resources :restaurants
   devise_for :owners
 
+  resources :menu_steps
+  
   resources :menus do
     resources :menu_items
   end
@@ -27,6 +29,7 @@ GrubshireOnsite::Application.routes.draw do
   
   root :to => 'dashboard#home'
   match 'authenticate' => 'dashboard#authenticate', :as => 'authenticate'
+  match 'partial_menu' => 'menus#partial_menu'
   match 'my_account' => 'dashboard#my_account', :as => 'my_account'
   match 'daily_special' => 'menus#daily_special', :as => 'daily_special'
   match 'dashboard' => 'dashboard#home'
