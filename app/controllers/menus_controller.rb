@@ -39,10 +39,17 @@ class MenusController < ApplicationController
   
   def update
     @menu = current_owner.menus.find(params[:id])
-    if @menu.update_attributes(params[:menu])
+    if session[:updated] == true
+      @menu.update_attributes(params[:menu])
+      session[:updated] = nil
       redirect_to @menu
     else
-      render "edit"
+      session[:menu_id] = @menu.id
+      if @menu.update_attributes(params[:menu])
+        redirect_to menu_steps_path
+      else
+        render "edit"
+      end
     end
   end
   
