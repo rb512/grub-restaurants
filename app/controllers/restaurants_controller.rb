@@ -33,11 +33,15 @@ class RestaurantsController < ApplicationController
   # GET /restaurants/new
   # GET /restaurants/new.json
   def new
-    @restaurant = current_owner.restaurants.new
-    @menus = get_menus()
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @restaurant }
+    if current_owner.menus.empty?
+      redirect_to new_menu_path, notice: "You need to create a menu before adding your restaurant."
+    else
+      @restaurant = current_owner.restaurants.new
+      @menus = get_menus()
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @restaurant }
+      end
     end
   end
 

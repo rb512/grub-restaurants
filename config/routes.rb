@@ -5,7 +5,8 @@ GrubshireOnsite::Application.routes.draw do
   resources :employees
 
   resources :restaurants
-  devise_for :owners
+
+  devise_for :owners, controllers: {registrations: :registrations}
 
   resources :menu_steps
   
