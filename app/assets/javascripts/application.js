@@ -16,11 +16,18 @@
 //= require core-js
 //= require page-js
 //= require cocoon
-
+//= require raphael
+//= require morris
 //= require ./plugins/core
 //= require ./plugins/demo
 //= require ./plugins/dashboard_v2
+//= require dash
 
+
+
+ $(document).ready(function () {
+    $(".live-tile,.flip-list").liveTile();
+});
 // $(document).ready(function() {
 //     $("#category a.add_fields").
 //       data("association-insertion-position", 'before').

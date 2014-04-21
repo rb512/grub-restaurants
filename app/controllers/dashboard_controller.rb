@@ -13,38 +13,31 @@ class DashboardController < ApplicationController
   end
   
   def home
-    @order_count = 0
-    @servers = {}
-    @order_sales = 0.0 
     @restaurants = current_owner.restaurants
-    @trending_item = ""
-    @most_ordered = ""
-    @most_ordered_sales = ""
-    @trending_item_sales = ""
-    if !current_owner.restaurants.empty?
-      current_owner.restaurants.each do |restaurant| 
-        @order_count += restaurant.orders.count 
-        @order_sales += restaurant.orders.sum(:total)
-        @servers = restaurant.employees.where(:category => 'Server')
-      end
-      
-      today = Time.now
-      restaurant = current_owner.restaurants.first
-      order_chart = restaurant.orders.sum(:total, :group => "DATE(created_at)", :conditions => {:created_at => today.beginning_of_month..today}) unless restaurant.nil?
-      data_table = GoogleVisualr::DataTable.new
-      data_table.new_column('string', 'Date' )
-      data_table.new_column('number', 'Total Sales')
-    # Add Rows and Values
-      order_chart.each do |order|
-        data_table.add_row([(order[0]).strftime("%m/%d"), order[1].round(5)])
-      end
+    @orders = current_owner.restaurants.first.orders
+    order_detail = @orders.group("date(created_at)").sum(:total)
+    @order_details = []
+    order_detail.each do |order|
+      hash = {created_at: order[0], total: order[1]}
+      @order_details << hash
     end
-
-
-
-# 
-#     option = { width: 1000, height: 340, title: 'Sales this month' }
-#     @chart = GoogleVisualr::Interactive::ColumnChart.new(data_table, option)
+    @orders_by_tablet = []
+    i=1
+    @order_total = 0
+    @orders.group(:tablet_id).count.each do |order|
+      order_data = {label: "Tablet #{i}", value: order[1]}
+      @order_total += order[1]
+      i+=1
+      @orders_by_tablet << order_data
+    end
+    
+    @order_by_category = []
+    items = OrderItem.where(order_id: @orders).group(:category).count
+    items.each do |item|
+      order_data = {label: item[0], value: item[1]}
+      @order_by_category << order_data  
+    end
+    
   end
 end
 

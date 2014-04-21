@@ -4,5 +4,4 @@
 //= require ./plugins/core/jquery.unveil.min
 //= require ./plugins/core/jqueryblockui
 //= require ./plugins/core/jquery.lazyload.min
-//= require ./plugins/core/jquery.flot.orderBars
-//= require ./plugins/core/morris.min
+//= require ./plugins/core/dataTable.bootstrap

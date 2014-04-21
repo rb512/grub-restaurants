@@ -3,7 +3,6 @@
 //= require ./plugins/page/jquery.slimscroll.min
 //= require ./plugins/page/pace.min
 //= require ./plugins/page/jquery.animateNumbers
-//= require ./plugins/page/raphael-min
 //= require ./plugins/page/d3.v2
 //= require ./plugins/page/rickshaw.min
 //= require ./plugins/page/jquery-sparkline
@@ -11,8 +10,7 @@
 //= require ./plugins/page/owl.carousel.min
 //= require ./plugins/page/polymaps.min
 
-//= require ./plugins/page/jquery.flot
-//= require ./plugins/page/jquery.flot.resize.min
+
 //= require ./plugins/page/MetroJs.min
 
 //= require ./plugins/page/jquery.dataTables.min
