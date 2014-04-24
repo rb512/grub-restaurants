@@ -14,7 +14,21 @@ class DashboardController < ApplicationController
   
   def home
     @restaurants = current_owner.restaurants
-    @orders = current_owner.restaurants.first.orders
+    if @restaurants.blank?
+      @orders = [] 
+      @order_total = 0
+      no_record = {label: "No Orders", value: 0}
+      @orders_by_tablet = []
+      @order_by_category = []
+      @orders_by_tablet << no_record
+      @order_by_category << no_record
+    else
+      create_dashboard
+    end
+  end
+  
+  def create_dashboard
+    @orders = @restaurants.first.orders
     order_detail = @orders.group("date(created_at)").sum(:total)
     @order_details = []
     order_detail.each do |order|
@@ -37,7 +51,6 @@ class DashboardController < ApplicationController
       order_data = {label: item[0], value: item[1]}
       @order_by_category << order_data  
     end
-    
   end
 end
 
